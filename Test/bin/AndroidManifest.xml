@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.test"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="8"
+        android:targetSdkVersion="18" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:screenOrientation="landscape"
+        android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+        android:windowActionBar="false" >
+        <activity
+            android:name="com.example.test.MainActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="landscape" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.example.test.GameStartActivity"
+            android:label="@string/title_activity_game_start"
+            android:screenOrientation="landscape" >
+        </activity>
+        <activity
+            android:name="com.example.test.SettingActivity"
+            android:label="@string/title_activity_setting"
+            android:screenOrientation="landscape"
+            android:theme="@style/CustomActionBarTheme" >
+        </activity>
+        <activity
+            android:name="com.example.test.MallActivity"
+            android:label="@string/title_activity_mall"
+            android:screenOrientation="landscape"
+            android:theme="@style/CustomActionBarTheme" >
+        </activity>
+        <activity
+            android:name="com.example.test.RankActivity"
+            android:label="@string/title_activity_rank"
+            android:screenOrientation="landscape"
+            android:theme="@style/CustomActionBarTheme" >
+        </activity>
+        <activity
+            android:name="com.example.test.GameActivity"
+            android:label="@string/title_activity_game"
+            android:screenOrientation="landscape" >
+        </activity>
+        <activity
+            android:name="com.example.test.GameEndActivity"
+            android:label="@string/title_activity_game_end"
+            android:screenOrientation="landscape"
+            android:theme="@style/CustomActionBarTheme" >
+        </activity>
+    </application>
+
+</manifest>

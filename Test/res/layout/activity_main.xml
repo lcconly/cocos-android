@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/main"
+    android:orientation="vertical" >
+
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="165dp"
+        android:layout_height="35dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:background="@drawable/button_start"
+        android:onClick="gameStart" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="165dp"
+        android:layout_height="35dp"
+        android:layout_alignLeft="@+id/button1"
+        android:layout_below="@+id/button1"
+        android:layout_marginTop="3dp"
+        android:background="@drawable/button_settings"
+        android:onClick="gameSetting" />
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="165dp"
+        android:layout_height="35dp"
+        android:layout_alignLeft="@+id/button1"
+        android:layout_below="@+id/button2"
+        android:layout_marginTop="3dp"
+        android:background="@drawable/button_mall"
+        android:onClick="gameMall" />
+    <Button
+        android:id="@+id/button4"
+        android:layout_width="165dp"
+        android:layout_height="35dp"
+        android:layout_alignLeft="@+id/button1"
+        android:layout_below="@+id/button3"
+        android:layout_marginTop="3dp"
+        android:background="@drawable/button_rank"
+        android:onClick="gameRank" />
+
+</RelativeLayout>
