@@ -55,7 +55,7 @@
         </activity>
         <activity
             android:name="com.example.test.GameEndActivity"
-            android:label="@string/title_activity_game_end"
+            android:label="@string/title_activity_game_end" 
             android:screenOrientation="landscape"
             android:theme="@style/CustomActionBarTheme" >
         </activity>

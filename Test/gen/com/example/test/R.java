@@ -1339,8 +1339,6 @@ containing a value of this type.
          */
         public static final int AppTheme=0x7f0b008c;
         /**  the theme applied to the application or activity 
- Support library compatibility 
-item name="actionBarStyle">@style/MyActionBar</item
          */
         public static final int CustomActionBarTheme=0x7f0b008d;
         /**  ActionBar styles 
