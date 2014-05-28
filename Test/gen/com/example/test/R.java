@@ -1081,18 +1081,21 @@ containing a value of this type.
         public static final int button_bought=0x7f020059;
         public static final int button_buy=0x7f02005a;
         public static final int button_easy=0x7f02005b;
-        public static final int button_hard=0x7f02005c;
-        public static final int button_mall=0x7f02005d;
-        public static final int button_norm=0x7f02005e;
-        public static final int button_rank=0x7f02005f;
-        public static final int button_save_and_back=0x7f020060;
-        public static final int button_settings=0x7f020061;
-        public static final int button_start=0x7f020062;
-        public static final int button_use=0x7f020063;
-        public static final int button_used=0x7f020064;
-        public static final int home=0x7f020065;
-        public static final int ic_launcher=0x7f020066;
-        public static final int main=0x7f020067;
+        public static final int button_easy_selected=0x7f02005c;
+        public static final int button_hard=0x7f02005d;
+        public static final int button_hard_selected=0x7f02005e;
+        public static final int button_mall=0x7f02005f;
+        public static final int button_norm=0x7f020060;
+        public static final int button_norm_selected=0x7f020061;
+        public static final int button_rank=0x7f020062;
+        public static final int button_save_and_back=0x7f020063;
+        public static final int button_settings=0x7f020064;
+        public static final int button_start=0x7f020065;
+        public static final int button_use=0x7f020066;
+        public static final int button_used=0x7f020067;
+        public static final int home=0x7f020068;
+        public static final int ic_launcher=0x7f020069;
+        public static final int main=0x7f02006a;
     }
     public static final class id {
         public static final int ListView01=0x7f050044;
