@@ -42,27 +42,43 @@ public class GameRunTimeCCLayer extends CCLayer
 	 private CCSprite game_button_4=null;
 	 private int speed=10;
 	 private int timer_time=30;
-	 private Timer timer_button_1=null;
-	 private Timer timer_button_2=null;
-	 private Timer timer_button_3=null;
-	 private Timer timer_button_4=null;
+	 private Timer timer_button_1=new Timer();
+	 private Timer timer_button_2=new Timer();
+	 private Timer timer_button_3=new Timer();
+	 private Timer timer_button_4=new Timer();
 	 private Timer end_game=new Timer();
 	 private Date date=new Date();
 	 public GameRunTimeCCLayer() {  
 		 this.setIsTouchEnabled(true);
 	     init();  
 	     game_started();
-//	     date=new Date();
-//	     button_1_start();
-//   		 button_2_start();
-//   		 button_3_start();
-//   		 button_4_start();
-   		 end_game_start();
+	     date=new Date();
+	     button_1_start();
+   		 button_2_start();
+   		 button_3_start();
+   		 button_4_start();
+//   		 end_game_start();
 //	        Intent intent = new Intent(CCDirector.sharedDirector().getActivity(), 
 //	        		GameEndActivity.class);
 //		    CCDirector.sharedDirector().getActivity().startActivity(intent);
+//	     end_game.schedule(new end_game_class(), 3000);
+	     end_game.schedule(new end_game_class(), 12000);
 	 } 
-	 
+	 class end_game_class extends TimerTask{
+
+		@Override
+		public void run() {
+			// TODO Auto-generated method stub
+				timer_button_1.cancel();
+				timer_button_2.cancel();
+				timer_button_3.cancel();
+				timer_button_4.cancel();
+		        Intent intent = new Intent(CCDirector.sharedDirector().getActivity(), 
+		        		GameEndActivity.class);
+			    CCDirector.sharedDirector().getActivity().startActivity(intent);
+		}
+		 
+	 }
 	 private void init() {  
 	        sprite_game_bg = CCSprite.sprite("game_bg.png");  
 	        // CCSprite游戏精灵类，需要加载一张图片代表游戏精灵  
@@ -128,7 +144,7 @@ public class GameRunTimeCCLayer extends CCLayer
 		 game_button_4.setAnchorPoint(0, 0);
 		 game_button_4.setPosition(370+270+270, 250);
 		 this.addChild(game_button_4, 7, 7);
-		 lable_game_grade=CCLabelAtlas.label("12", "fps_images.png", 16,32, '.');
+		 lable_game_grade=CCLabelAtlas.label("12", "digits.png", 28,50, '0');
 		 //grade_temp.format("%06d", game_grade);
 		 lable_game_grade.setString(""+game_grade);
 		 //lable_game_grade.setAnchorPoint(0, 0);
@@ -209,9 +225,10 @@ public class GameRunTimeCCLayer extends CCLayer
 					game_button_1.setPosition(100, (game_button_1.getPosition().y=550));
 					//timer_button_1.cancel();
 				}
-				if(newdate.getMinutes()-date.getMinutes()==0
-						&&newdate.getSeconds()-date.getSeconds()>10)
-					timer_button_1.cancel();
+//				if(newdate.getMinutes()-date.getMinutes()==0
+//						&&newdate.getSeconds()-date.getSeconds()>10){
+//					timer_button_1.cancel();
+//				}
 			}
 		}, 0, timer_time);
 	 }
@@ -240,9 +257,10 @@ public class GameRunTimeCCLayer extends CCLayer
 					game_button_2.setPosition(370, (game_button_2.getPosition().y=550));
 					//timer_button_2.cancel();
 				}
-				if(newdate.getMinutes()-date.getMinutes()==0
-						&&newdate.getSeconds()-date.getSeconds()>10)
-					timer_button_2.cancel();
+//				if(newdate.getMinutes()-date.getMinutes()==0
+//						&&newdate.getSeconds()-date.getSeconds()>10){
+//					timer_button_2=null;
+//				}
 
 			}
 		}, 0, timer_time);
@@ -272,9 +290,10 @@ public class GameRunTimeCCLayer extends CCLayer
 					game_button_3.setPosition(370+270, (game_button_3.getPosition().y=550));
 					//timer_button_3.cancel();
 				}
-				if(newdate.getMinutes()-date.getMinutes()==0
-						&&newdate.getSeconds()-date.getSeconds()>10)
-					timer_button_3.cancel();
+//				if(newdate.getMinutes()-date.getMinutes()==0
+//						&&newdate.getSeconds()-date.getSeconds()>10){
+//					timer_button_3.cancel();
+//				}
 			}
 		}, 0, timer_time);
 	 }
@@ -303,9 +322,10 @@ public class GameRunTimeCCLayer extends CCLayer
 					game_button_4.setPosition(370+270+270, (game_button_4.getPosition().y=550));
 					//timer_button_4.cancel();
 				}
-				if(newdate.getMinutes()-date.getMinutes()==0
-						&&newdate.getSeconds()-date.getSeconds()>10)
-					timer_button_4.cancel();
+//				if(newdate.getMinutes()-date.getMinutes()==0
+//						&&newdate.getSeconds()-date.getSeconds()>10){
+//					timer_button_4.cancel();
+//				}
 			}
 		}, 0, timer_time);
 	 }
@@ -315,8 +335,10 @@ public class GameRunTimeCCLayer extends CCLayer
 			@Override
 			public void run() {
 				// TODO Auto-generated method stub
-				if(timer_button_1==null&&timer_button_2==null
-						&&timer_button_3==null&&timer_button_4==null){
+				Date newdate=new Date();
+//				if(timer_button_1==null&&timer_button_2==null
+//						&&timer_button_3==null&&timer_button_4==null){
+				if(date.getSeconds()-newdate.getSeconds()>10){
 			        Intent intent = new Intent(CCDirector.sharedDirector().getActivity(), 
 			        		GameEndActivity.class);
 				    CCDirector.sharedDirector().getActivity().startActivity(intent);
