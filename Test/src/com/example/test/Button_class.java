@@ -135,22 +135,26 @@ public class Button_class extends CCLayer{
 					if(buttonCcSprite.getPosition().x==100&&GameRunTimeCCLayer.tag[0]!=-1){
 						 GameRunTimeCCLayer.lock.lock();
 						GameRunTimeCCLayer.tag[0]=-1;
+				        ccLayer.removeChild(buttonCcSprite, true);
 						 GameRunTimeCCLayer.lock.unlock();
 					}
-					else if(buttonCcSprite.getPosition().x==270&&GameRunTimeCCLayer.tag[1]!=-1){
+					else if(buttonCcSprite.getPosition().x==370&&GameRunTimeCCLayer.tag[1]!=-1){
 						 GameRunTimeCCLayer.lock.lock();
 						GameRunTimeCCLayer.tag[1]=-1;
+				        ccLayer.removeChild(buttonCcSprite, true);
 						 GameRunTimeCCLayer.lock.unlock();
 
 					}
-					if(buttonCcSprite.getPosition().x==270+170&&GameRunTimeCCLayer.tag[2]!=-1){
+					if(buttonCcSprite.getPosition().x==370+270&&GameRunTimeCCLayer.tag[2]!=-1){
 						 GameRunTimeCCLayer.lock.lock();
 						GameRunTimeCCLayer.tag[2]=-1;
+				        ccLayer.removeChild(buttonCcSprite, true);
 						 GameRunTimeCCLayer.lock.unlock();
 					}
-					if(buttonCcSprite.getPosition().x==270+170+170&&GameRunTimeCCLayer.tag[3]!=-1){
+					if(buttonCcSprite.getPosition().x==370+270+270&&GameRunTimeCCLayer.tag[3]!=-1){
 						 GameRunTimeCCLayer.lock.lock();
 						GameRunTimeCCLayer.tag[3]=-1;
+				        ccLayer.removeChild(buttonCcSprite, true);
 						 GameRunTimeCCLayer.lock.unlock();
 					}
 					break;

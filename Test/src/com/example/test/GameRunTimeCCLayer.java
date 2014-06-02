@@ -46,6 +46,9 @@ public class GameRunTimeCCLayer extends CCLayer
 //	 private int timer_time=30;
 	 static ReentrantLock lock = new ReentrantLock();
 	 private Timer end_game=new Timer();
+	 private Timer start_game_1=new Timer();
+	 private Timer start_game_2=new Timer();
+	 private Timer start_game_3=new Timer();
 //	 private Date date=new Date();
 	 private File_read file_read=new File_read();
 	 public GameRunTimeCCLayer() {  
@@ -66,17 +69,86 @@ public class GameRunTimeCCLayer extends CCLayer
 	    	 tag[i]=-1;
 	     }
 	     file_read.init("music.txt");
-	     end_game.schedule(new end_game_class(), file_read.get_end_time());
+	     end_game.schedule(new end_game_class(), file_read.get_end_time()+3000);
 	     game_button=new Button_class[file_read.get_button_num()];
 //	     System.out.println("!!!!!!!asmbbh   "+file_read.get_button_num());
 //	     System.out.println("!!!!!!!asmbbh   "+file_read.get_end_time());
 	     for(int i=0;i<file_read.get_button_num();i++){
 	    	 game_button[i]=new Button_class(i,1, file_read.get_certain_palce(i), 
-	    			 file_read.get_certain_start_time(i), game_grade,this);
+	    			 file_read.get_certain_start_time(i)+3000, game_grade,this);
 	     }
 	     for(int i=0;i<file_read.get_button_num();i++)
 	    	 game_button[i].start_run();
+	     start_game_3.schedule(new start_game_class_3(), 0);
+	     start_game_2.schedule(new start_game_class_2(), 1000);
+	     start_game_2.schedule(new start_game_class_1(), 2000);
 	 } 
+	 class start_game_class_1 extends TimerTask{
+
+		@Override
+		public void run() {
+			// TODO Auto-generated method stub
+	        CCSprite start_1 = CCSprite.sprite("1.png");
+	        
+	        start_1.setAnchorPoint(0, 0);
+	        
+	        start_1.setPosition(600, 300);
+	        
+	        GameRunTimeCCLayer.this.addChild(start_1, 9, 9);
+	        try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	        GameRunTimeCCLayer.this.removeChild(start_1, true);
+		}
+
+	 }
+	 class start_game_class_2 extends TimerTask{
+
+		@Override
+		public void run() {
+			// TODO Auto-generated method stub
+	        CCSprite start_2 = CCSprite.sprite("2.png");
+	        
+	        start_2.setAnchorPoint(0, 0);
+	        
+	        start_2.setPosition(600, 300);
+	        
+	        GameRunTimeCCLayer.this.addChild(start_2, 9, 9);
+	        try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	        GameRunTimeCCLayer.this.removeChild(start_2, true);
+		}
+		 
+	 }
+	 class start_game_class_3 extends TimerTask{
+
+		@Override
+		public void run() {
+			// TODO Auto-generated method stub
+	        CCSprite start_3 = CCSprite.sprite("3.png");
+	        
+	        start_3.setAnchorPoint(0, 0);
+	        
+	        start_3.setPosition(600, 300);
+	        
+	        GameRunTimeCCLayer.this.addChild(start_3, 9, 9);
+	        try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	        GameRunTimeCCLayer.this.removeChild(start_3, true);
+		}
+		 
+	 }
 	 class end_game_class extends TimerTask{
 
 		@Override
@@ -175,7 +247,7 @@ public class GameRunTimeCCLayer extends CCLayer
 		 
 		 if(CGRect.containsPoint(sprite_game_pause.getBoundingBox(), point))
 		 {
-			// CCDirector.sharedDirector().onPause();
+			 CCDirector.sharedDirector().onPause();
 			 this.pauseSchedulerAndActions();
 			 CCDirector.sharedDirector().replaceScene(GamePauseScene.scene());
 			 //CCRenderTexture renderTexture = CCRenderTexture.renderTexture(1280, 720);
