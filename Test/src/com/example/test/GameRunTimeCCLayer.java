@@ -6,6 +6,7 @@ import java.util.Formatter;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 import org.cocos2d.actions.CCScheduler;
 import org.cocos2d.actions.UpdateCallback;
@@ -35,44 +36,54 @@ public class GameRunTimeCCLayer extends CCLayer
 	 private CCSprite sprite_game_pause = null;
 	 private CCLabelAtlas lable_game_grade=null;
 	 //private Formatter grade_temp=new Formatter();
-	 private int game_grade=0;
-	 private CCSprite game_button_1=null;
-	 private CCSprite game_button_2=null;	 
-	 private CCSprite game_button_3=null;
-	 private CCSprite game_button_4=null;
+	 private int[] game_grade=new int[1];
+	 private Button_class[] game_button;
+	 public static int[] tag=new int[4];
+//	 private CCSprite game_button_2=null;	 
+//	 private CCSprite game_button_3=null;
+//	 private CCSprite game_button_4=null;
 	 private int speed=10;
-	 private int timer_time=30;
-	 private Timer timer_button_1=new Timer();
-	 private Timer timer_button_2=new Timer();
-	 private Timer timer_button_3=new Timer();
-	 private Timer timer_button_4=new Timer();
+//	 private int timer_time=30;
+	 static ReentrantLock lock = new ReentrantLock();
 	 private Timer end_game=new Timer();
-	 private Date date=new Date();
+//	 private Date date=new Date();
+	 private File_read file_read=new File_read();
 	 public GameRunTimeCCLayer() {  
 		 this.setIsTouchEnabled(true);
 	     init();  
-	     game_started();
-	     date=new Date();
-	     button_1_start();
-   		 button_2_start();
-   		 button_3_start();
-   		 button_4_start();
+//	     game_started();
+//	     date=new Date();
+//	     button_1_start();
+//   		 button_2_start();
+//   		 button_3_start();
+//   		 button_4_start();
 //   		 end_game_start();
 //	        Intent intent = new Intent(CCDirector.sharedDirector().getActivity(), 
 //	        		GameEndActivity.class);
 //		    CCDirector.sharedDirector().getActivity().startActivity(intent);
 //	     end_game.schedule(new end_game_class(), 3000);
-	     end_game.schedule(new end_game_class(), 12000);
+	     for(int i=0;i<4;i++){
+	    	 tag[i]=-1;
+	     }
+	     file_read.init("music.txt");
+	     end_game.schedule(new end_game_class(), file_read.get_end_time());
+	     game_button=new Button_class[file_read.get_button_num()];
+//	     System.out.println("!!!!!!!asmbbh   "+file_read.get_button_num());
+//	     System.out.println("!!!!!!!asmbbh   "+file_read.get_end_time());
+	     for(int i=0;i<file_read.get_button_num();i++){
+	    	 game_button[i]=new Button_class(i,1, file_read.get_certain_palce(i), 
+	    			 file_read.get_certain_start_time(i), game_grade,this);
+	     }
+	     for(int i=0;i<file_read.get_button_num();i++)
+	    	 game_button[i].start_run();
 	 } 
 	 class end_game_class extends TimerTask{
 
 		@Override
 		public void run() {
 			// TODO Auto-generated method stub
-				timer_button_1.cancel();
-				timer_button_2.cancel();
-				timer_button_3.cancel();
-				timer_button_4.cancel();
+				for(int i=0;i<game_button.length;i++)
+					game_button[i].end_time();
 		        Intent intent = new Intent(CCDirector.sharedDirector().getActivity(), 
 		        		GameEndActivity.class);
 			    CCDirector.sharedDirector().getActivity().startActivity(intent);
@@ -109,7 +120,12 @@ public class GameRunTimeCCLayer extends CCLayer
 	        sprite_game_pause.setPosition(40, 630);
 	        
 	        this.addChild(sprite_game_pause, 2, 2);
-	  
+			 lable_game_grade=CCLabelAtlas.label("12", "digits.png", 28,50, '0');
+			 //grade_temp.format("%06d", game_grade);
+			 lable_game_grade.setString(""+game_grade[0]);
+			 //lable_game_grade.setAnchorPoint(0, 0);
+			 lable_game_grade.setPosition(370+270+270, 650);
+			 this.addChild(lable_game_grade,8,8);	
 /*	        sprite_helloword = CCSprite.sprite("helloworld.png");  
 	        sprite_helloword.setAnchorPoint(CGPoint.getZero());  
 	        sprite_helloword.setPosition(  
@@ -124,34 +140,34 @@ public class GameRunTimeCCLayer extends CCLayer
 	        // 换言之就是重要性越高，越优先显示在上层 
 	         */
 	    }
-	 private void game_started(){
-		 game_button_1=CCSprite.sprite("touch_button.png");
-		 game_button_1.setAnchorPoint(0, 0);
-		 game_button_1.setPosition(100, 550);
-		 this.addChild(game_button_1, 4, 4);
-		 
-		 game_button_2=CCSprite.sprite("touch_button.png");
-		 game_button_2.setAnchorPoint(0, 0);
-		 game_button_2.setPosition(370, 450);
-		 this.addChild(game_button_2, 5, 5);
-		 
-		 game_button_3=CCSprite.sprite("touch_button.png");
-		 game_button_3.setAnchorPoint(0, 0);
-		 game_button_3.setPosition(370+270, 350);
-		 this.addChild(game_button_3, 6, 6);
-		 
-		 game_button_4=CCSprite.sprite("touch_button.png");
-		 game_button_4.setAnchorPoint(0, 0);
-		 game_button_4.setPosition(370+270+270, 250);
-		 this.addChild(game_button_4, 7, 7);
-		 lable_game_grade=CCLabelAtlas.label("12", "digits.png", 28,50, '0');
-		 //grade_temp.format("%06d", game_grade);
-		 lable_game_grade.setString(""+game_grade);
-		 //lable_game_grade.setAnchorPoint(0, 0);
-		 lable_game_grade.setPosition(370+270+270, 650);
-		 this.addChild(lable_game_grade,8,8);	
-		 
-	 }
+//	 private void game_started(){
+//		 game_button_1=CCSprite.sprite("touch_button.png");
+//		 game_button_1.setAnchorPoint(0, 0);
+//		 game_button_1.setPosition(100, 550);
+//		 this.addChild(game_button_1, 4, 4);
+//		 
+//		 game_button_2=CCSprite.sprite("touch_button.png");
+//		 game_button_2.setAnchorPoint(0, 0);
+//		 game_button_2.setPosition(370, 450);
+//		 this.addChild(game_button_2, 5, 5);
+//		 
+//		 game_button_3=CCSprite.sprite("touch_button.png");
+//		 game_button_3.setAnchorPoint(0, 0);
+//		 game_button_3.setPosition(370+270, 350);
+//		 this.addChild(game_button_3, 6, 6);
+//		 
+//		 game_button_4=CCSprite.sprite("touch_button.png");
+//		 game_button_4.setAnchorPoint(0, 0);
+//		 game_button_4.setPosition(370+270+270, 250);
+//		 this.addChild(game_button_4, 7, 7);
+//		 lable_game_grade=CCLabelAtlas.label("12", "digits.png", 28,50, '0');
+//		 //grade_temp.format("%06d", game_grade);
+//		 lable_game_grade.setString(""+game_grade);
+//		 //lable_game_grade.setAnchorPoint(0, 0);
+//		 lable_game_grade.setPosition(370+270+270, 650);
+//		 this.addChild(lable_game_grade,8,8);	
+//		 
+//	 }
 	 @Override
 	  public boolean ccTouchesEnded(MotionEvent event) {
 	    
@@ -169,181 +185,187 @@ public class GameRunTimeCCLayer extends CCLayer
 			 
 			 //CCDirector.sharedDirector().pushScene(GamePauseScene.scene(renderTexture,true));
 		 }
-		 if(CGRect.containsPoint(game_button_1.getBoundingBox(), point)
-				 &&game_button_1.getPosition().y<100&&game_button_1.getPosition().y>=0){
-			 game_grade+=100;
-			 //grade_temp.format("%06d", game_grade);
-			 lable_game_grade.setString(""+game_grade);
-			 //System.out.println("grade: "+game_grade);
-			 
-		 }
-		 if(CGRect.containsPoint(game_button_2.getBoundingBox(), point)
-				 &&game_button_2.getPosition().y<100&&game_button_2.getPosition().y>=0){
-			 game_grade+=100;
-			 //grade_temp.format("%06d", game_grade);
-			 lable_game_grade.setString(""+game_grade);
-			 //System.out.println("grade: "+game_grade);
-		 }
-		 if(CGRect.containsPoint(game_button_3.getBoundingBox(), point)
-				 &&game_button_3.getPosition().y<100&&game_button_3.getPosition().y>=0){
-			 game_grade+=100;
-			 //grade_temp.format("%06d", game_grade);
-			 lable_game_grade.setString(""+game_grade);
-			 //System.out.println("grade: "+game_grade);
-		 }
-		 if(CGRect.containsPoint(game_button_4.getBoundingBox(), point)
-				 &&game_button_4.getPosition().y<100&&game_button_4.getPosition().y>=0){
-			 game_grade+=100;
-			 //grade_temp.format("%06d", game_grade);
-			 lable_game_grade.setString(""+game_grade);
-			 //System.out.println("grade: "+game_grade);
-		 }
+		 for(int i=0;i<4;i++){
+			 lock.lock();
+			 if(tag[i]!=-1&&CGRect.containsPoint(game_button[tag[i]].get_CCS().getBoundingBox(), point)
+					 &&game_button[tag[i]].get_CCS().getPosition().y<100&&
+					 game_button[tag[i]].get_CCS().getPosition().y>=-50){
+				 game_grade[0]+=100;
+				 //grade_temp.format("%06d", game_grade);
+				 lable_game_grade.setString(""+game_grade[0]);
+				 tag[i]=-1;
+				 //System.out.println("grade: "+game_grade);
+				 
+			 }
+			 lock.unlock();
+		}
+//		 if(CGRect.containsPoint(game_button_2.getBoundingBox(), point)
+//				 &&game_button_2.getPosition().y<100&&game_button_2.getPosition().y>=0){
+//			 game_grade+=100;
+//			 //grade_temp.format("%06d", game_grade);
+//			 lable_game_grade.setString(""+game_grade);
+//			 //System.out.println("grade: "+game_grade);
+//		 }
+//		 if(CGRect.containsPoint(game_button_3.getBoundingBox(), point)
+//				 &&game_button_3.getPosition().y<100&&game_button_3.getPosition().y>=0){
+//			 game_grade+=100;
+//			 //grade_temp.format("%06d", game_grade);
+//			 lable_game_grade.setString(""+game_grade);
+//			 //System.out.println("grade: "+game_grade);
+//		 }
+//		 if(CGRect.containsPoint(game_button_4.getBoundingBox(), point)
+//				 &&game_button_4.getPosition().y<100&&game_button_4.getPosition().y>=0){
+//			 game_grade+=100;
+//			 //grade_temp.format("%06d", game_grade);
+//			 lable_game_grade.setString(""+game_grade);
+//			 //System.out.println("grade: "+game_grade);
+//		 }
 		 return true;
 	  }
-	 public void button_1_start(){
-		 if(timer_button_1==null) 
-			 timer_button_1=new Timer();
-		 timer_button_1.schedule(new TimerTask() {
-			
-			@Override
-			public void run() {
-				// TODO Auto-generated method stub
-				Date newdate=new Date();
-				if(newdate.getSeconds()-date.getSeconds()>0){
-					game_button_1.setPosition(100, (game_button_1.getPosition().y=game_button_1.getPosition().y-speed));
-					//game_button_2.setPosition(370, (game_button_2.getPosition().y=game_button_2.getPosition().y-speed));
-					//game_button_3.setPosition(370+270, (game_button_3.getPosition().y=game_button_3.getPosition().y-speed));
-					//game_button_4.setPosition(370+270+270, (game_button_4.getPosition().y=game_button_4.getPosition().y-speed));
-				}
-				if(game_button_1.getPosition().y==0){
-					try {
-						Thread.sleep(30);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					game_button_1.setPosition(100, (game_button_1.getPosition().y=550));
-					//timer_button_1.cancel();
-				}
-//				if(newdate.getMinutes()-date.getMinutes()==0
-//						&&newdate.getSeconds()-date.getSeconds()>10){
-//					timer_button_1.cancel();
+//	 public void button_1_start(){
+//		 if(timer_button_1==null) 
+//			 timer_button_1=new Timer();
+//		 timer_button_1.schedule(new TimerTask() {
+//			
+//			@Override
+//			public void run() {
+//				// TODO Auto-generated method stub
+//				Date newdate=new Date();
+//				if(newdate.getSeconds()-date.getSeconds()>0){
+//					game_button_1.setPosition(100, (game_button_1.getPosition().y=game_button_1.getPosition().y-speed));
+//					//game_button_2.setPosition(370, (game_button_2.getPosition().y=game_button_2.getPosition().y-speed));
+//					//game_button_3.setPosition(370+270, (game_button_3.getPosition().y=game_button_3.getPosition().y-speed));
+//					//game_button_4.setPosition(370+270+270, (game_button_4.getPosition().y=game_button_4.getPosition().y-speed));
 //				}
-			}
-		}, 0, timer_time);
-	 }
-	 public void button_2_start(){
-		 if(timer_button_2==null)
-			 timer_button_2=new Timer();
-		 timer_button_2.schedule(new TimerTask() {
-			
-			@Override
-			public void run() {
-				// TODO Auto-generated method stub
-				Date newdate=new Date();
-				if(newdate.getSeconds()-date.getSeconds()>0){
-					//game_button_1.setPosition(100, (game_button_1.getPosition().y=game_button_1.getPosition().y-speed));
-					game_button_2.setPosition(370, (game_button_2.getPosition().y=game_button_2.getPosition().y-speed));
-					//game_button_3.setPosition(370+270, (game_button_3.getPosition().y=game_button_3.getPosition().y-speed));
-					//game_button_4.setPosition(370+270+270, (game_button_4.getPosition().y=game_button_4.getPosition().y-speed));
-				}
-				if(game_button_2.getPosition().y==0){
-					try {
-						Thread.sleep(30);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					game_button_2.setPosition(370, (game_button_2.getPosition().y=550));
-					//timer_button_2.cancel();
-				}
-//				if(newdate.getMinutes()-date.getMinutes()==0
-//						&&newdate.getSeconds()-date.getSeconds()>10){
-//					timer_button_2=null;
+//				if(game_button_1.getPosition().y==0){
+//					try {
+//						Thread.sleep(30);
+//					} catch (InterruptedException e) {
+//						// TODO Auto-generated catch block
+//						e.printStackTrace();
+//					}
+//					game_button_1.setPosition(100, (game_button_1.getPosition().y=550));
+//					//timer_button_1.cancel();
 //				}
-
-			}
-		}, 0, timer_time);
-	 }
-	 public void button_3_start(){
-		 if(timer_button_3==null) 
-			 timer_button_3=new Timer();
-		 timer_button_3.schedule(new TimerTask() {
-			
-			@Override
-			public void run() {
-				// TODO Auto-generated method stub
-				Date newdate=new Date();
-				if(newdate.getSeconds()-date.getSeconds()>0){
-					//game_button_1.setPosition(100, (game_button_1.getPosition().y=game_button_1.getPosition().y-speed));
-					//game_button_2.setPosition(370, (game_button_2.getPosition().y=game_button_2.getPosition().y-speed));
-					game_button_3.setPosition(370+270, (game_button_3.getPosition().y=game_button_3.getPosition().y-speed));
-					//game_button_4.setPosition(370+270+270, (game_button_4.getPosition().y=game_button_4.getPosition().y-speed));
-				}
-				if(game_button_3.getPosition().y==0){
-					try {
-						Thread.sleep(30);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					game_button_3.setPosition(370+270, (game_button_3.getPosition().y=550));
-					//timer_button_3.cancel();
-				}
-//				if(newdate.getMinutes()-date.getMinutes()==0
-//						&&newdate.getSeconds()-date.getSeconds()>10){
-//					timer_button_3.cancel();
+////				if(newdate.getMinutes()-date.getMinutes()==0
+////						&&newdate.getSeconds()-date.getSeconds()>10){
+////					timer_button_1.cancel();
+////				}
+//			}
+//		}, 0, timer_time);
+//	 }
+//	 public void button_2_start(){
+//		 if(timer_button_2==null)
+//			 timer_button_2=new Timer();
+//		 timer_button_2.schedule(new TimerTask() {
+//			
+//			@Override
+//			public void run() {
+//				// TODO Auto-generated method stub
+//				Date newdate=new Date();
+//				if(newdate.getSeconds()-date.getSeconds()>0){
+//					//game_button_1.setPosition(100, (game_button_1.getPosition().y=game_button_1.getPosition().y-speed));
+//					game_button_2.setPosition(370, (game_button_2.getPosition().y=game_button_2.getPosition().y-speed));
+//					//game_button_3.setPosition(370+270, (game_button_3.getPosition().y=game_button_3.getPosition().y-speed));
+//					//game_button_4.setPosition(370+270+270, (game_button_4.getPosition().y=game_button_4.getPosition().y-speed));
 //				}
-			}
-		}, 0, timer_time);
-	 }
-	 public void button_4_start(){
-		 if(timer_button_4==null) 
-			 timer_button_4=new Timer();
-		 timer_button_4.schedule(new TimerTask() {
-			
-			@Override
-			public void run() {
-				// TODO Auto-generated method stub
-				Date newdate=new Date();
-				if(newdate.getSeconds()-date.getSeconds()>0){
-					//game_button_1.setPosition(100, (game_button_1.getPosition().y=game_button_1.getPosition().y-speed));
-					//game_button_2.setPosition(370, (game_button_2.getPosition().y=game_button_2.getPosition().y-speed));
-					//game_button_3.setPosition(370+270, (game_button_3.getPosition().y=game_button_3.getPosition().y-speed));
-					game_button_4.setPosition(370+270+270, (game_button_4.getPosition().y=game_button_4.getPosition().y-speed));
-				}
-				if(game_button_4.getPosition().y==0){
-					try {
-						Thread.sleep(30);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					game_button_4.setPosition(370+270+270, (game_button_4.getPosition().y=550));
-					//timer_button_4.cancel();
-				}
-//				if(newdate.getMinutes()-date.getMinutes()==0
-//						&&newdate.getSeconds()-date.getSeconds()>10){
-//					timer_button_4.cancel();
+//				if(game_button_2.getPosition().y==0){
+//					try {
+//						Thread.sleep(30);
+//					} catch (InterruptedException e) {
+//						// TODO Auto-generated catch block
+//						e.printStackTrace();
+//					}
+//					game_button_2.setPosition(370, (game_button_2.getPosition().y=550));
+//					//timer_button_2.cancel();
 //				}
-			}
-		}, 0, timer_time);
-	 }
-	 public void end_game_start(){
-		 end_game.schedule(new TimerTask() {
-			
-			@Override
-			public void run() {
-				// TODO Auto-generated method stub
-				Date newdate=new Date();
-//				if(timer_button_1==null&&timer_button_2==null
-//						&&timer_button_3==null&&timer_button_4==null){
-				if(date.getSeconds()-newdate.getSeconds()>10){
-			        Intent intent = new Intent(CCDirector.sharedDirector().getActivity(), 
-			        		GameEndActivity.class);
-				    CCDirector.sharedDirector().getActivity().startActivity(intent);
-				}
-			}
-		}, 0, timer_time);
-	 }
+////				if(newdate.getMinutes()-date.getMinutes()==0
+////						&&newdate.getSeconds()-date.getSeconds()>10){
+////					timer_button_2=null;
+////				}
+//
+//			}
+//		}, 0, timer_time);
+//	 }
+//	 public void button_3_start(){
+//		 if(timer_button_3==null) 
+//			 timer_button_3=new Timer();
+//		 timer_button_3.schedule(new TimerTask() {
+//			
+//			@Override
+//			public void run() {
+//				// TODO Auto-generated method stub
+//				Date newdate=new Date();
+//				if(newdate.getSeconds()-date.getSeconds()>0){
+//					//game_button_1.setPosition(100, (game_button_1.getPosition().y=game_button_1.getPosition().y-speed));
+//					//game_button_2.setPosition(370, (game_button_2.getPosition().y=game_button_2.getPosition().y-speed));
+//					game_button_3.setPosition(370+270, (game_button_3.getPosition().y=game_button_3.getPosition().y-speed));
+//					//game_button_4.setPosition(370+270+270, (game_button_4.getPosition().y=game_button_4.getPosition().y-speed));
+//				}
+//				if(game_button_3.getPosition().y==0){
+//					try {
+//						Thread.sleep(30);
+//					} catch (InterruptedException e) {
+//						// TODO Auto-generated catch block
+//						e.printStackTrace();
+//					}
+//					game_button_3.setPosition(370+270, (game_button_3.getPosition().y=550));
+//					//timer_button_3.cancel();
+//				}
+////				if(newdate.getMinutes()-date.getMinutes()==0
+////						&&newdate.getSeconds()-date.getSeconds()>10){
+////					timer_button_3.cancel();
+////				}
+//			}
+//		}, 0, timer_time);
+//	 }
+//	 public void button_4_start(){
+//		 if(timer_button_4==null) 
+//			 timer_button_4=new Timer();
+//		 timer_button_4.schedule(new TimerTask() {
+//			
+//			@Override
+//			public void run() {
+//				// TODO Auto-generated method stub
+//				Date newdate=new Date();
+//				if(newdate.getSeconds()-date.getSeconds()>0){
+//					//game_button_1.setPosition(100, (game_button_1.getPosition().y=game_button_1.getPosition().y-speed));
+//					//game_button_2.setPosition(370, (game_button_2.getPosition().y=game_button_2.getPosition().y-speed));
+//					//game_button_3.setPosition(370+270, (game_button_3.getPosition().y=game_button_3.getPosition().y-speed));
+//					game_button_4.setPosition(370+270+270, (game_button_4.getPosition().y=game_button_4.getPosition().y-speed));
+//				}
+//				if(game_button_4.getPosition().y==0){
+//					try {
+//						Thread.sleep(30);
+//					} catch (InterruptedException e) {
+//						// TODO Auto-generated catch block
+//						e.printStackTrace();
+//					}
+//					game_button_4.setPosition(370+270+270, (game_button_4.getPosition().y=550));
+//					//timer_button_4.cancel();
+//				}
+////				if(newdate.getMinutes()-date.getMinutes()==0
+////						&&newdate.getSeconds()-date.getSeconds()>10){
+////					timer_button_4.cancel();
+////				}
+//			}
+//		}, 0, timer_time);
+//	 }
+//	 public void end_game_start(){
+//		 end_game.schedule(new TimerTask() {
+//			
+//			@Override
+//			public void run() {
+//				// TODO Auto-generated method stub
+//				Date newdate=new Date();
+////				if(timer_button_1==null&&timer_button_2==null
+////						&&timer_button_3==null&&timer_button_4==null){
+//				if(date.getSeconds()-newdate.getSeconds()>10){
+//			        Intent intent = new Intent(CCDirector.sharedDirector().getActivity(), 
+//			        		GameEndActivity.class);
+//				    CCDirector.sharedDirector().getActivity().startActivity(intent);
+//				}
+//			}
+//		}, 0, timer_time);
+//	 }
 }
