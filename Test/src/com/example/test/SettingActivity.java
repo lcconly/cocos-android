@@ -1,6 +1,10 @@
 package com.example.test;
 
+import android.R.integer;
+import android.content.Context;
 import android.content.Intent;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBar;
@@ -9,9 +13,20 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.WindowManager;
+import android.widget.SeekBar;
+import android.widget.SeekBar.OnSeekBarChangeListener;
 
 public class SettingActivity extends ActionBarActivity {
+	
+	//private ImageButton imageButton_white1;  
+	private MediaPlayer player;  
+	public  AudioManager audiomanage;  
+	//private TextView mVolume ;  //显示当前音量  
+	public  SeekBar soundBar;  
+	private int maxVolume, currentVolume;   
 
+	private int volume=0;  //初始化声音
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -21,6 +36,43 @@ public class SettingActivity extends ActionBarActivity {
 		actionBar.setTitle(R.string.home);
 		actionBar.setHomeButtonEnabled(true);
 		actionBar.setIcon(R.drawable.home);
+		
+		player = new MediaPlayer(); 
+		
+		///imageButton_white1=(ImageButton)findViewById(R.id.white1);  
+        final SeekBar soundBar=(SeekBar)findViewById(R.id.seekBar1);  //音量设置  
+        //mVolume = (TextView)findViewById(R.id.mVolume);    
+        audiomanage = (AudioManager)getSystemService(Context.AUDIO_SERVICE);    
+  
+  
+        maxVolume = audiomanage.getStreamMaxVolume(AudioManager.STREAM_MUSIC);  //获取系统最大音量  
+        soundBar.setMax(maxVolume);   //拖动条最高值与系统最大声匹配  
+        currentVolume = audiomanage.getStreamVolume(AudioManager.STREAM_MUSIC);  //获取当前值  
+        soundBar.setProgress(currentVolume);    
+        //mVolume.setText(currentVolume*100/maxVolume + " %");    
+   
+        soundBar.setOnSeekBarChangeListener(new OnSeekBarChangeListener() //调音监听器  
+        {  
+            public void onProgressChanged(SeekBar arg0,int progress,boolean fromUser)  
+            {  
+                audiomanage.setStreamVolume(AudioManager.STREAM_MUSIC, progress, 0);    
+                currentVolume = audiomanage.getStreamVolume(AudioManager.STREAM_MUSIC);  //获取当前值  
+                soundBar.setProgress(currentVolume);    
+                //mVolume.setText(currentVolume*100/maxVolume + " %");    
+            }  
+              
+            @Override  
+            public void onStartTrackingTouch(SeekBar seekBar) {  
+                // TODO Auto-generated method stub  
+                  
+            }  
+            @Override  
+            public void onStopTrackingTouch(SeekBar seekBar) {  
+                // TODO Auto-generated method stub  
+                  
+  
+            }  
+        }); 
 	}
 
 	@Override
