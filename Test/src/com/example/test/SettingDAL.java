@@ -9,7 +9,7 @@ import android.database.sqlite.SQLiteDatabase;
  * Created with IntelliJ IDEA.
  * User: Shannon
  * Date: 14-5-26
- * Time: 下午9:22
+ * Time: 涓����9:22
  * To change this template use File | Settings | File Templates.
  */
 public class SettingDAL {
@@ -62,4 +62,9 @@ public class SettingDAL {
         }
         return true;
     }
+    
+    public Cursor getCursor(){
+    	return settingCursor;
+    }
 }
+

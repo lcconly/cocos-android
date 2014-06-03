@@ -9,7 +9,7 @@ import android.database.sqlite.SQLiteDatabase;
  * Created with IntelliJ IDEA.
  * User: Shannon
  * Date: 14-5-18
- * Time: 下午10:31
+ * Time: 涓����10:31
  * To change this template use File | Settings | File Templates.
  */
 public class SongDAL {
@@ -77,4 +77,8 @@ public class SongDAL {
 
 
     }*/
+    
+    public Cursor getCursor(){
+    	return songCursor;
+    }
 }
