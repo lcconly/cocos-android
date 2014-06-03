@@ -154,6 +154,7 @@ public class GameRunTimeCCLayer extends CCLayer {
 				game_button[i].end_time();
 			Intent intent = new Intent(CCDirector.sharedDirector()
 					.getActivity(), GameEndActivity.class);
+			intent.putExtra("grade_game", game_grade[0]);
 			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | 
                     Intent.FLAG_ACTIVITY_NEW_TASK);
 			CCDirector.sharedDirector().getActivity().startActivity(intent);
