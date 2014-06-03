@@ -1,4 +1,4 @@
-package com.example.Test;
+package com.example.test;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -73,8 +73,8 @@ public class SongDAL {
     }
 
 
-    public Cursor query(SongItem songItem){
+    /*public Cursor query(SongItem songItem){
 
 
-    }
+    }*/
 }
