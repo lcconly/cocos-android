@@ -7,9 +7,18 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.WindowManager;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 public class GameEndActivity extends ActionBarActivity {
+	
+	private EditText nameEditText;
+	
+	private Button button;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -21,8 +30,30 @@ public class GameEndActivity extends ActionBarActivity {
 		actionBar.setTitle(R.string.home);
 		actionBar.setHomeButtonEnabled(true);
 		actionBar.setIcon(R.drawable.home);
+		
+		nameEditText=(EditText)findViewById(R.id.input_name);
+		
+		button=(Button)findViewById(R.id.button_save);
+		button.setOnClickListener(new listener());
 	}
 
+	class listener implements OnClickListener {
+
+		@Override
+		public void onClick(View arg0) {
+			// TODO Auto-generated method stub
+			String name=nameEditText.getText().toString();
+			if(name.equals("")) {
+				Toast.makeText(getApplicationContext(), "名字不能为空！", Toast.LENGTH_SHORT).show();
+			}
+			else {
+				//插入数据库
+			}
+			
+		}
+		
+	}
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
