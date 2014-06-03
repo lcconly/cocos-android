@@ -29,7 +29,13 @@ public class GameActivity extends Activity {
         ccScene.addChild(new GameRunTimeCCLayer()); //将MyCCLayer层加到场景里  
         CCDirector.sharedDirector().runWithScene(ccScene);// 运行场景
 	}
-
+	@Override
+	public void onBackPressed() {
+		// TODO Auto-generated method stub
+		super.onBackPressed();
+		new GameRunTimeCCLayer().cancel_all();
+	}
+	
 	@Override  
     protected void onResume() {  
         super.onResume();  
@@ -41,7 +47,7 @@ public class GameActivity extends Activity {
     @Override  
     protected void onPause() {  
         super.onPause();  
-        CCDirector.sharedDirector().onPause();  
+        CCDirector.sharedDirector().pause();  
         //暂停，游戏切出时候调用  
     }  
   
