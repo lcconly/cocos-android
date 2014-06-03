@@ -6,6 +6,7 @@ import org.cocos2d.opengl.CCGLSurfaceView;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.view.KeyEvent;
 import android.view.Menu;
 
 public class GameActivity extends Activity {
@@ -35,7 +36,11 @@ public class GameActivity extends Activity {
 		super.onBackPressed();
 		new GameRunTimeCCLayer().cancel_all();
 	}
-	
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		// TODO Auto-generated method stub
+		return super.onKeyDown(keyCode, event);
+	}
 	@Override  
     protected void onResume() {  
         super.onResume();  
