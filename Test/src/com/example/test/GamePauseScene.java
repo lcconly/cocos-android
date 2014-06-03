@@ -2,8 +2,12 @@ package com.example.test;
 
 import org.cocos2d.layers.CCLayer;
 import org.cocos2d.layers.CCScene;
+import org.cocos2d.nodes.CCDirector;
 import org.cocos2d.nodes.CCSprite;
 import org.cocos2d.types.CGPoint;
+import org.cocos2d.types.CGRect;
+
+import android.view.MotionEvent;
 
 
 public class GamePauseScene extends CCLayer {
@@ -13,6 +17,7 @@ public class GamePauseScene extends CCLayer {
 	private CCSprite sprite_pause_back = null;
 	private CCSprite sprite_pause_home = null;
 	public GamePauseScene()	{
+		 this.setIsTouchEnabled(true);
 		sprite_game_bg = CCSprite.sprite("pause_main_bg.png");  
         // CCSprite游戏精灵类，需要加载一张图片代表游戏精灵  
   
@@ -63,7 +68,23 @@ public class GamePauseScene extends CCLayer {
 	public static CCScene scene(){
 		CCScene m_scene = CCScene.node();
 		  m_scene.addChild(new GamePauseScene());
-
+		  
 		  return m_scene;
+	}
+	 @Override
+	  public boolean ccTouchesEnded(MotionEvent event) {
+	    
+		 CGPoint point = this.convertTouchToNodeSpace(event);
+		 
+		 if(CGRect.containsPoint(sprite_pause_continue.getBoundingBox(), point))
+		 {
+			 CCDirector.sharedDirector().onResume();
+			 //CCRenderTexture renderTexture = CCRenderTexture.renderTexture(1280, 720);
+			 //renderTexture.begin();
+			 //this.getParent().visit(null);
+			 //renderTexture.end();
+			 //CCDirector.sharedDirector().pushScene(GamePauseScene.scene(renderTexture,true));
+		 }
+		 return true;
 	}
 }
