@@ -4,13 +4,13 @@ package com.example.test;
  * Created with IntelliJ IDEA.
  * User: Shannon
  * Date: 14-6-3
- * Time: ‰∏ãÂçà5:13
+ * Time: œ¬ŒÁ5:13
  * To change this template use File | Settings | File Templates.
  */
 public interface ThemeItem {
 
     String getThemeName();
     String getThemeFile();
-    String getUseFlag();
-    String getAvailable();
+    boolean getUseFlag();
+    boolean getAvailable();
 }

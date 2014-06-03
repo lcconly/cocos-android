@@ -4,17 +4,17 @@ package com.example.test;
  * Created with IntelliJ IDEA.
  * User: Shannon
  * Date: 14-6-3
- * Time: ‰∏ãÂçà5:17
+ * Time: œ¬ŒÁ5:17
  * To change this template use File | Settings | File Templates.
  */
 public class Theme implements ThemeItem {
 
     private String _themeName;
     private String _themeFile;
-    private String _useFlag;
-    private String _available;
+    private boolean _useFlag;
+    private boolean _available;
 
-    public Theme(String themeName, String themeFile, String useFlag, String available){
+    public Theme(String themeName, String themeFile, boolean useFlag, boolean available){
         _themeName = themeName;
         _themeFile = themeFile;
         _useFlag = useFlag;
@@ -28,10 +28,10 @@ public class Theme implements ThemeItem {
     public String getThemeFile(){
         return _themeFile;
     }
-    public String getUseFlag(){
+    public boolean getUseFlag(){
         return _useFlag;
     }
-    public String getAvailable(){
+    public boolean getAvailable(){
         return _available;
     }
 

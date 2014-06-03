@@ -15,14 +15,14 @@ import android.widget.Toast;
 
 public class MallActivity extends ActionBarActivity {
 	
-	Button button1;
-	Button button2;
-	Button button3;
-	Button button4;
-	int state1;
-	int state2;
-	int state3;
-	int state4;
+	private Button button1;
+	private Button button2;
+	private Button button3;
+	private Button button4;
+	//private int state1;
+	private int state2;
+	private int state3;
+	private int state4;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -42,9 +42,9 @@ public class MallActivity extends ActionBarActivity {
 		button2=(Button)findViewById(R.id.button2);
 		button3=(Button)findViewById(R.id.button3);
 		button4=(Button)findViewById(R.id.button4);
-		
+
 		if(true) {//¶ÁÈ¡Êý¾Ý¿â
-			state1=1;
+			//state1=1;
 			state2=1;
 			state3=0;
 			state4=0;

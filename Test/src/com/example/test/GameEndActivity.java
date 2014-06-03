@@ -12,12 +12,13 @@ import android.view.WindowManager;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class GameEndActivity extends ActionBarActivity {
 	
 	private EditText nameEditText;
-	
+	private TextView scoreTextView;
 	private Button button;
 
 	@Override
@@ -33,6 +34,8 @@ public class GameEndActivity extends ActionBarActivity {
 		
 		nameEditText=(EditText)findViewById(R.id.input_name);
 		
+		//scoreTextView=(TextView)findViewById(R.id.)
+		
 		button=(Button)findViewById(R.id.button_save);
 		button.setOnClickListener(new listener());
 	}
@@ -47,7 +50,12 @@ public class GameEndActivity extends ActionBarActivity {
 				Toast.makeText(getApplicationContext(), "名字不能为空！", Toast.LENGTH_SHORT).show();
 			}
 			else {
-				//插入数据库
+				Score score=new Score(name,"99999");
+				ScoreDAL dal=new ScoreDAL(GameEndActivity.this);
+				dal.insert(score);
+				
+				Intent intent=new Intent(GameEndActivity.this, GameStartActivity.class);
+		        startActivity(intent);
 			}
 			
 		}
