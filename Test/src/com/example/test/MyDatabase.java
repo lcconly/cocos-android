@@ -48,28 +48,23 @@ public class MyDatabase extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         //To change body of implemented methods use File | Settings | File Templates.
-        db.execSQL("create table" + SONG_TABLE_NAME + " ( _id integer primary key autoincrement, "
-                + SONG_COLUMN1 + "text, "
-                + SONG_COLUMN2 + "text, "
-                + SONG_COLUMN3 + "text, "
-                + SONG_COLUMN4 + "text, "
-                + SONG_COLUMN5 + "text ); ");
-        db.execSQL("create table" + SCORE_TABLE_NAME + " ( _id integer primary key autoincrement, "
-                + SCORE_COLUMN1 + "text, "
-                + SCORE_COLUMN2 + "text ); ");
-        db.execSQL("create table" + THEME_TABLE_NAME + " ( _id integer primary key autoincrement, "
-                + THEME_COLUMN1 + "text, "
-                + THEME_COLUMN2 + "text, "
-                + THEME_COLUMN3 + "text, "
-                + THEME_COLUMN4 + "boolean, "
-                + THEME_COLUMN4 + "boolean ); ");
-        db.execSQL("create table" + SETTINGS_TABLE_NAME + " ( _id integer primary key autoincrement, "
-                + SETTINGS_COLUMN1 + "text, "
-                + SETTINGS_COLUMN2 + "text ); ");
-
-
-
-
+            db.execSQL("create table " + SONG_TABLE_NAME + " ( _id integer primary key autoincrement, "
+                    + SONG_COLUMN1 + " text, "
+                    + SONG_COLUMN2 + " text, "
+                    + SONG_COLUMN3 + " text, "
+                    + SONG_COLUMN4 + " text, "
+                    + SONG_COLUMN5 + " text ); ");
+            db.execSQL("create table " + SCORE_TABLE_NAME + " ( _id integer primary key autoincrement, "
+                    + SCORE_COLUMN1 + " text, "
+                    + SCORE_COLUMN2 + " text ); ");
+            db.execSQL("create table " + THEME_TABLE_NAME + " ( _id integer primary key autoincrement, "
+                    + THEME_COLUMN1 + " text, "
+                    + THEME_COLUMN2 + " text, "
+                    + THEME_COLUMN3 + " boolean, "
+                    + THEME_COLUMN4 + " boolean ); ");
+            db.execSQL("create table " + SETTINGS_TABLE_NAME + " ( _id integer primary key autoincrement, "
+                    + SETTINGS_COLUMN1 + " text, "
+                    + SETTINGS_COLUMN2 + " text ); ");
     }
 
     @Override

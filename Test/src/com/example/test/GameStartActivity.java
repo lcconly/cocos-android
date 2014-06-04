@@ -142,6 +142,17 @@ public class GameStartActivity extends Activity {
 		}
 		
 	}
+	
+	@Override
+	protected void onResume() {
+		
+		super.onResume();
+		button1.setBackgroundResource(R.drawable.button_easy_selected);
+		button2.setBackgroundResource(R.drawable.button_norm);
+		button3.setBackgroundResource(R.drawable.button_hard);
+		
+		state=1;
+	}
 
 
 }
