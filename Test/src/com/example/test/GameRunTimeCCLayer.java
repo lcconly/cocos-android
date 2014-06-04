@@ -1,5 +1,6 @@
 package com.example.test;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -13,10 +14,17 @@ import org.cocos2d.types.CGPoint;
 import org.cocos2d.types.CGRect;
 
 import android.R.integer;
+import android.content.Context;
 import android.content.Intent;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.view.MotionEvent;
 
 public class GameRunTimeCCLayer extends CCLayer {
+	private MediaPlayer mp; //MediaPlayer引用
+    private AudioManager am;//AudioManager引用
+    private int max;//最大音量
+    private int current;//当前音量
 	private CCSprite sprite_game_bg = null;
 	private CCSprite sprite_game_nav = null;
 	private CCSprite sprite_game_pause = null;
@@ -53,6 +61,8 @@ public class GameRunTimeCCLayer extends CCLayer {
 			game_button[i].end_time();
 		}
 		end_game.cancel();
+		mp.stop();
+		mp.release();
 	}
 	public GameRunTimeCCLayer() {
 		this.setIsTouchEnabled(true);
@@ -178,6 +188,25 @@ public class GameRunTimeCCLayer extends CCLayer {
 			}
 			GameRunTimeCCLayer.this.removeChild(start_pic_1, true);
 			start_pic_1=null;
+			//play background music
+			mp=new MediaPlayer();
+	        try {
+	            //mp.setDataSource("youngandbeautiful.mp3");//设置路径
+	        	mp = MediaPlayer.create(CCDirector.sharedDirector().getActivity(), R.raw.youngandbeautiful);//设置路径
+	            mp.prepare();//缓冲
+	        } catch (IllegalArgumentException e) {
+	            e.printStackTrace();
+	        } catch (IllegalStateException e) {
+	            e.printStackTrace();
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        }
+	        am=(AudioManager) CCDirector.sharedDirector().getActivity().getSystemService(Context.AUDIO_SERVICE);
+	        max=am.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
+	        
+	        //stepVolume=max/8;
+	        mp.start();
+
 		}
 
 	}
@@ -250,6 +279,41 @@ public class GameRunTimeCCLayer extends CCLayer {
 		}
 
 	}
+	class start_game_class_1_continue extends TimerTask {
+
+		@Override
+		public void run() {
+			// TODO Auto-generated method stub
+			if(start_pic_1!=null)
+				GameRunTimeCCLayer.this.removeChild(start_pic_1, true);
+			start_pic_1=null;
+			if(start_pic_2!=null)
+				GameRunTimeCCLayer.this.removeChild(start_pic_2, true);
+			start_pic_2=null;
+			if(start_pic_3!=null)
+				GameRunTimeCCLayer.this.removeChild(start_pic_3, true);
+			start_pic_3=null;
+
+			start_pic_1 = CCSprite.sprite("1.png");
+
+			start_pic_1.setAnchorPoint(0, 0);
+
+			start_pic_1.setPosition(600, 300);
+
+			GameRunTimeCCLayer.this.addChild(start_pic_1, 9, 9);
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			GameRunTimeCCLayer.this.removeChild(start_pic_1, true);
+			start_pic_1=null;
+			//play background music
+	        mp.start();
+		}
+
+	}
 
 	class end_game_class extends TimerTask {
 
@@ -261,6 +325,8 @@ public class GameRunTimeCCLayer extends CCLayer {
 			Intent intent = new Intent(CCDirector.sharedDirector()
 					.getActivity(), GameEndActivity.class);
 			intent.putExtra("grade_game", game_grade[0]);
+			mp.stop();
+			mp.release();
 			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | 
                     Intent.FLAG_ACTIVITY_NEW_TASK);
 			CCDirector.sharedDirector().getActivity().startActivity(intent);
@@ -351,6 +417,7 @@ public class GameRunTimeCCLayer extends CCLayer {
 		CGPoint point = this.convertTouchToNodeSpace(event);
 		if (pauseScene==null&&CGRect.containsPoint(sprite_game_pause.getBoundingBox(), point)) {
 			CCDirector.sharedDirector().pause();
+			mp.pause();
 			timeTestEnd=System.currentTimeMillis();//记录结束时间
 			for (int i = 0; i < game_button.length; i++){
 				game_button[i].set_tag(1);
@@ -377,7 +444,6 @@ public class GameRunTimeCCLayer extends CCLayer {
 			pauseScene=null;
 			long time_pause=(timeTestEnd-timeTestStart);
 //			System.out.println("!!!!   "+time_pause);
-			
 			end_game=new Timer();
 			if(new_end_time>time_pause)
 				end_game.schedule(new end_game_class(), (new_end_time=(new_end_time-(int)time_pause))+3000);
@@ -398,12 +464,14 @@ public class GameRunTimeCCLayer extends CCLayer {
 			}
 			start_game_3.schedule(new start_game_class_3(), 0);
 			start_game_2.schedule(new start_game_class_2(), 1000);
-			start_game_1.schedule(new start_game_class_1(), 2000);
+			start_game_1.schedule(new start_game_class_1_continue(), 2000);
 			timeTestStart=System.currentTimeMillis()+3000;
 		}
 		if (pauseScene!=null&&CGRect.containsPoint(pauseScene.get_back().getBoundingBox(), point)) {
 			for (int i = 0; i < game_button.length; i++)
 				game_button[i].end_time();
+			mp.stop();
+			mp.release();
 			end_game.cancel();
 			this.removeChild(pauseScene, true);
 			pauseScene=null;
@@ -417,6 +485,8 @@ public class GameRunTimeCCLayer extends CCLayer {
 			for (int i = 0; i < game_button.length; i++)
 				game_button[i].end_time();
 			end_game.cancel();
+			mp.stop();
+			mp.release();
 			this.removeChild(pauseScene, true);
 			pauseScene=null;
 			Intent intent = new Intent(CCDirector.sharedDirector()

@@ -10,7 +10,7 @@ import android.view.KeyEvent;
 import android.view.Menu;
 
 public class GameActivity extends Activity {
-
+	private GameRunTimeCCLayer ccLayer;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -27,14 +27,15 @@ public class GameActivity extends Activity {
 		CCDirector.sharedDirector().setScreenSize(1280, 720);
 		
 		CCScene ccScene = CCScene.node();  //创建一个场景，用来显示游戏界面  
-        ccScene.addChild(new GameRunTimeCCLayer()); //将MyCCLayer层加到场景里  
+		ccLayer=new GameRunTimeCCLayer();
+        ccScene.addChild(ccLayer); //将MyCCLayer层加到场景里  
         CCDirector.sharedDirector().runWithScene(ccScene);// 运行场景
 	}
 	@Override
 	public void onBackPressed() {
 		// TODO Auto-generated method stub
 		super.onBackPressed();
-		new GameRunTimeCCLayer().cancel_all();
+		ccLayer.cancel_all();
 	}
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {

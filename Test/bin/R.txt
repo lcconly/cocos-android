@@ -384,6 +384,7 @@ int menu rank 0x7f0d0005
 int menu setting 0x7f0d0006
 int menu setting_actions 0x7f0d0007
 int raw music 0x7f050000
+int raw youngandbeautiful 0x7f050001
 int string abc_action_bar_home_description 0x7f0b0001
 int string abc_action_bar_up_description 0x7f0b0002
 int string abc_action_menu_overflow_description 0x7f0b0003
