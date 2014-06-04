@@ -20,6 +20,10 @@ public class GameRunTimeCCLayer extends CCLayer {
 	private CCSprite sprite_game_bg = null;
 	private CCSprite sprite_game_nav = null;
 	private CCSprite sprite_game_pause = null;
+	private CCSprite sprite_good_perfect = null;
+	private CCSprite start_pic_1 = null;
+	private CCSprite start_pic_2 = null;
+	private CCSprite start_pic_3 = null;
 	private CCLabelAtlas lable_game_grade = null;
 	// private Formatter grade_temp=new Formatter();
 	private int[] game_grade = new int[1];
@@ -35,6 +39,7 @@ public class GameRunTimeCCLayer extends CCLayer {
 	private Timer start_game_1 = new Timer();
 	private Timer start_game_2 = new Timer();
 	private Timer start_game_3 = new Timer();
+	private Timer good_perfect_timer=new Timer();
 	private int new_end_time;
 	private int[] new_start_time;
 	long timeTestStart;//=System.currentTimeMillis();//记录开始时间
@@ -84,29 +89,95 @@ public class GameRunTimeCCLayer extends CCLayer {
 			game_button[i].start_run();
 		start_game_3.schedule(new start_game_class_3(), 0);
 		start_game_2.schedule(new start_game_class_2(), 1000);
-		start_game_2.schedule(new start_game_class_1(), 2000);
+		start_game_1.schedule(new start_game_class_1(), 2000);
 		timeTestStart=System.currentTimeMillis();//记录开始时间
 	}
-
-	class start_game_class_1 extends TimerTask {
+	class good_game extends TimerTask {
 
 		@Override
 		public void run() {
 			// TODO Auto-generated method stub
-			CCSprite start_1 = CCSprite.sprite("1.png");
+			if(sprite_good_perfect!=null)
+				GameRunTimeCCLayer.this.removeChild(sprite_good_perfect, true);
+			sprite_good_perfect=null;
 
-			start_1.setAnchorPoint(0, 0);
+			 sprite_good_perfect =CCSprite.sprite("good.png");
 
-			start_1.setPosition(600, 300);
+			 sprite_good_perfect.setAnchorPoint(0, 0);
 
-			GameRunTimeCCLayer.this.addChild(start_1, 9, 9);
+			 sprite_good_perfect.setPosition(450, 300);
+
+			GameRunTimeCCLayer.this.addChild(sprite_good_perfect, 9, 9);
 			try {
 				Thread.sleep(1000);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			GameRunTimeCCLayer.this.removeChild(start_1, true);
+			GameRunTimeCCLayer.this.removeChild(sprite_good_perfect, true);
+			sprite_good_perfect=null;
+		}
+
+	}
+	class perfect_game extends TimerTask {
+
+		@Override
+		public void run() {
+			// TODO Auto-generated method stub
+			if(sprite_good_perfect!=null)
+				GameRunTimeCCLayer.this.removeChild(sprite_good_perfect, true);
+			sprite_good_perfect=null;
+
+			 sprite_good_perfect =CCSprite.sprite("perfect.png");
+
+			 sprite_good_perfect.setAnchorPoint(0, 0);
+
+			 sprite_good_perfect.setPosition(450, 300);
+
+			GameRunTimeCCLayer.this.addChild(sprite_good_perfect, 9, 9);
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			GameRunTimeCCLayer.this.removeChild(sprite_good_perfect, true);
+			sprite_good_perfect=null;
+		}
+
+	}
+
+
+	class start_game_class_1 extends TimerTask {
+
+		@Override
+		public void run() {
+			// TODO Auto-generated method stub
+			if(start_pic_1!=null)
+				GameRunTimeCCLayer.this.removeChild(start_pic_1, true);
+			start_pic_1=null;
+			if(start_pic_2!=null)
+				GameRunTimeCCLayer.this.removeChild(start_pic_2, true);
+			start_pic_2=null;
+			if(start_pic_3!=null)
+				GameRunTimeCCLayer.this.removeChild(start_pic_3, true);
+			start_pic_3=null;
+
+			start_pic_1 = CCSprite.sprite("1.png");
+
+			start_pic_1.setAnchorPoint(0, 0);
+
+			start_pic_1.setPosition(600, 300);
+
+			GameRunTimeCCLayer.this.addChild(start_pic_1, 9, 9);
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			GameRunTimeCCLayer.this.removeChild(start_pic_1, true);
+			start_pic_1=null;
 		}
 
 	}
@@ -116,20 +187,32 @@ public class GameRunTimeCCLayer extends CCLayer {
 		@Override
 		public void run() {
 			// TODO Auto-generated method stub
-			CCSprite start_2 = CCSprite.sprite("2.png");
+			if(start_pic_1!=null)
+				GameRunTimeCCLayer.this.removeChild(start_pic_1, true);
+			start_pic_1=null;
 
-			start_2.setAnchorPoint(0, 0);
+			if(start_pic_2!=null)
+				GameRunTimeCCLayer.this.removeChild(start_pic_2, true);
+			start_pic_2=null;
+			if(start_pic_3!=null)
+				GameRunTimeCCLayer.this.removeChild(start_pic_3, true);
+			start_pic_3=null;
 
-			start_2.setPosition(600, 300);
+			start_pic_2 = CCSprite.sprite("2.png");
 
-			GameRunTimeCCLayer.this.addChild(start_2, 9, 9);
+			start_pic_2.setAnchorPoint(0, 0);
+
+			start_pic_2.setPosition(600, 300);
+
+			GameRunTimeCCLayer.this.addChild(start_pic_2, 9, 9);
 			try {
 				Thread.sleep(1000);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			GameRunTimeCCLayer.this.removeChild(start_2, true);
+			GameRunTimeCCLayer.this.removeChild(start_pic_2, true);
+			start_pic_2=null;
 		}
 
 	}
@@ -139,20 +222,31 @@ public class GameRunTimeCCLayer extends CCLayer {
 		@Override
 		public void run() {
 			// TODO Auto-generated method stub
-			CCSprite start_3 = CCSprite.sprite("3.png");
+			if(start_pic_1!=null)
+				GameRunTimeCCLayer.this.removeChild(start_pic_1, true);
+			start_pic_1=null;
+			if(start_pic_2!=null)
+				GameRunTimeCCLayer.this.removeChild(start_pic_2, true);
+			start_pic_2=null;
 
-			start_3.setAnchorPoint(0, 0);
+			if(start_pic_3!=null)
+				GameRunTimeCCLayer.this.removeChild(start_pic_3, true);
+			start_pic_3=null;
+			start_pic_3 = CCSprite.sprite("3.png");
 
-			start_3.setPosition(600, 300);
+			start_pic_3.setAnchorPoint(0, 0);
 
-			GameRunTimeCCLayer.this.addChild(start_3, 9, 9);
+			start_pic_3.setPosition(600, 300);
+
+			GameRunTimeCCLayer.this.addChild(start_pic_3, 9, 9);
 			try {
 				Thread.sleep(1000);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			GameRunTimeCCLayer.this.removeChild(start_3, true);
+			GameRunTimeCCLayer.this.removeChild(start_pic_3, true);
+			start_pic_3=null;
 		}
 
 	}
@@ -286,7 +380,7 @@ public class GameRunTimeCCLayer extends CCLayer {
 			
 			end_game=new Timer();
 			if(new_end_time>time_pause)
-				end_game.schedule(new end_game_class(), (new_end_time=(int)(new_end_time-time_pause))+3000);
+				end_game.schedule(new end_game_class(), (new_end_time=(new_end_time-(int)time_pause))+3000);
 			// System.out.println("!!!!!!!asmbbh   "+file_read.get_button_num());
 			//System.out.println("!!!!!!!asmbbh   "+file_read.get_end_time());
 			for (int i = 0; i < game_button.length; i++){
@@ -294,8 +388,9 @@ public class GameRunTimeCCLayer extends CCLayer {
 					game_button[i].set_tag(4);
 					if(new_start_time[i]-time_pause>0)
 						game_button[i].set_sleep((new_start_time[i]=new_start_time[i]-(int)time_pause)+3000);
-					else
+					else {
 						game_button[i].set_sleep(3000);
+					}
 				}
 				else if(tag[0]==i||tag[1]==i||tag[2]==i||tag[3]==i){
 					game_button[i].set_tag(3);
@@ -303,7 +398,7 @@ public class GameRunTimeCCLayer extends CCLayer {
 			}
 			start_game_3.schedule(new start_game_class_3(), 0);
 			start_game_2.schedule(new start_game_class_2(), 1000);
-			start_game_2.schedule(new start_game_class_1(), 2000);
+			start_game_1.schedule(new start_game_class_1(), 2000);
 			timeTestStart=System.currentTimeMillis()+3000;
 		}
 		if (pauseScene!=null&&CGRect.containsPoint(pauseScene.get_back().getBoundingBox(), point)) {
@@ -332,14 +427,31 @@ public class GameRunTimeCCLayer extends CCLayer {
 		}
 		for (int i = 0; i < 4; i++) {
 			lock.lock();
-			if (pauseScene==null&&tag[i] != -1
+			if (start_pic_1==null&&start_pic_2==null&&start_pic_3==null&&pauseScene==null&&tag[i] != -1
 					&& CGRect.containsPoint(game_button[tag[i]].get_CCS()
 							.getBoundingBox(), point)
 					&& game_button[tag[i]].get_CCS().getPosition().y < 100
+					&& game_button[tag[i]].get_CCS().getPosition().y >= 25) {
+				game_grade[0] += 50;
+				game_button[tag[i]].set_CCS(CCSprite.sprite("touched_button.png"));				// grade_temp.format("%06d", game_grade);
+				lable_game_grade.setString("" + game_grade[0]);
+				good_perfect_timer=new Timer();
+				good_perfect_timer.schedule(new good_game(), 0);
+				tag[i] = -1;
+				// System.out.println("grade: "+game_grade);
+
+			}
+			else if (start_pic_1==null&&start_pic_2==null&&start_pic_3==null&&pauseScene==null&&tag[i] != -1
+					&& CGRect.containsPoint(game_button[tag[i]].get_CCS()
+							.getBoundingBox(), point)
+					&& game_button[tag[i]].get_CCS().getPosition().y < 25
 					&& game_button[tag[i]].get_CCS().getPosition().y >= -50) {
 				game_grade[0] += 100;
+				game_button[tag[i]].set_CCS(CCSprite.sprite("touched_button.png"));
 				// grade_temp.format("%06d", game_grade);
 				lable_game_grade.setString("" + game_grade[0]);
+				good_perfect_timer=new Timer();
+				good_perfect_timer.schedule(new perfect_game(), 0);
 				tag[i] = -1;
 				// System.out.println("grade: "+game_grade);
 

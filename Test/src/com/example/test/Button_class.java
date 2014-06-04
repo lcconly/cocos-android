@@ -38,6 +38,16 @@ public class Button_class extends CCLayer{
 	public void set_tag(int tag) {
 		this.tags=tag;
 	}
+	public void set_CCS(CCSprite ss) {
+		CCSprite temp=buttonCcSprite;
+		ccLayer.removeChild(buttonCcSprite, true);
+		this.buttonCcSprite=ss;
+
+		  buttonCcSprite.setAnchorPoint(0, 0);
+
+		 buttonCcSprite.setPosition(temp.getPosition().x, temp.getPosition().y);
+		ccLayer.addChild(buttonCcSprite, 3+place, 3+place);
+	}
 	public Button_class(int id,int kind,int place,int start_time,int[] grade,GameRunTimeCCLayer ccLayer){
 		this.id=id;
 		tags=0;
@@ -153,7 +163,7 @@ public class Button_class extends CCLayer{
 				 GameRunTimeCCLayer.lock.unlock();
 			}
 			while(true){
-				if(tags==1){
+				if(tags==1||tags==4){
 					try {
 						Thread.sleep(30);
 					} catch (InterruptedException e) {
@@ -193,12 +203,14 @@ public class Button_class extends CCLayer{
 						 GameRunTimeCCLayer.lock.lock();
 						GameRunTimeCCLayer.tag[0]=-1;
 				        ccLayer.removeChild(buttonCcSprite, true);
+				        ccLayer=null;
 						 GameRunTimeCCLayer.lock.unlock();
 					}
 					else if(buttonCcSprite.getPosition().x==370&&GameRunTimeCCLayer.tag[1]!=-1){
 						 GameRunTimeCCLayer.lock.lock();
 						GameRunTimeCCLayer.tag[1]=-1;
 				        ccLayer.removeChild(buttonCcSprite, true);
+				        ccLayer=null;
 						 GameRunTimeCCLayer.lock.unlock();
 
 					}
@@ -206,12 +218,14 @@ public class Button_class extends CCLayer{
 						 GameRunTimeCCLayer.lock.lock();
 						GameRunTimeCCLayer.tag[2]=-1;
 				        ccLayer.removeChild(buttonCcSprite, true);
+				        ccLayer=null;
 						 GameRunTimeCCLayer.lock.unlock();
 					}
 					if(buttonCcSprite.getPosition().x==370+270+270&&GameRunTimeCCLayer.tag[3]!=-1){
 						 GameRunTimeCCLayer.lock.lock();
 						GameRunTimeCCLayer.tag[3]=-1;
 				        ccLayer.removeChild(buttonCcSprite, true);
+				        ccLayer=null;
 						 GameRunTimeCCLayer.lock.unlock();
 					}
 					break;
