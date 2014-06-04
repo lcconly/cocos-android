@@ -1,5 +1,6 @@
 package com.example.test;
 
+import java.io.InputStream;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.locks.ReentrantLock;
@@ -11,6 +12,7 @@ import org.cocos2d.nodes.CCSprite;
 import org.cocos2d.types.CGPoint;
 import org.cocos2d.types.CGRect;
 
+import android.R.integer;
 import android.content.Intent;
 import android.view.MotionEvent;
 
@@ -33,12 +35,18 @@ public class GameRunTimeCCLayer extends CCLayer {
 	private Timer start_game_1 = new Timer();
 	private Timer start_game_2 = new Timer();
 	private Timer start_game_3 = new Timer();
+	private int new_end_time;
+	private int[] new_start_time;
+	long timeTestStart;//=System.currentTimeMillis();//记录开始时间
+
+	long timeTestEnd;//=System.currentTimeMillis();//记录结束时间
 	// private Date date=new Date();
 	private File_read file_read = new File_read();
 	private GamePauseScene pauseScene;
 	public void cancel_all(){
-		for (int i = 0; i < game_button.length; i++)
+		for (int i = 0; i < game_button.length; i++){
 			game_button[i].end_time();
+		}
 		end_game.cancel();
 	}
 	public GameRunTimeCCLayer() {
@@ -60,7 +68,9 @@ public class GameRunTimeCCLayer extends CCLayer {
 		}
 		file_read.init("music.txt");
 		end_game.schedule(new end_game_class(), file_read.get_end_time() + 3000);
+		new_end_time=file_read.get_end_time();
 		game_button = new Button_class[file_read.get_button_num()];
+		new_start_time=new int[file_read.get_button_num()];
 		// System.out.println("!!!!!!!asmbbh   "+file_read.get_button_num());
 		// System.out.println("!!!!!!!asmbbh   "+file_read.get_end_time());
 		for (int i = 0; i < file_read.get_button_num(); i++) {
@@ -68,12 +78,14 @@ public class GameRunTimeCCLayer extends CCLayer {
 					file_read.get_certain_palce(i),
 					file_read.get_certain_start_time(i) + 3000, game_grade,
 					this);
+			new_start_time[i]=file_read.get_certain_palce(i);
 		}
 		for (int i = 0; i < file_read.get_button_num(); i++)
 			game_button[i].start_run();
 		start_game_3.schedule(new start_game_class_3(), 0);
 		start_game_2.schedule(new start_game_class_2(), 1000);
 		start_game_2.schedule(new start_game_class_1(), 2000);
+		timeTestStart=System.currentTimeMillis();//记录开始时间
 	}
 
 	class start_game_class_1 extends TimerTask {
@@ -243,8 +255,14 @@ public class GameRunTimeCCLayer extends CCLayer {
 	public boolean ccTouchesBegan(MotionEvent event) {
 
 		CGPoint point = this.convertTouchToNodeSpace(event);
-		if (CGRect.containsPoint(sprite_game_pause.getBoundingBox(), point)) {
+		if (pauseScene==null&&CGRect.containsPoint(sprite_game_pause.getBoundingBox(), point)) {
 			CCDirector.sharedDirector().pause();
+			timeTestEnd=System.currentTimeMillis();//记录结束时间
+			for (int i = 0; i < game_button.length; i++){
+				game_button[i].set_tag(1);
+				new_start_time[i]=new_start_time[i]-(int)(timeTestEnd-timeTestStart);
+			}
+			end_game.cancel();
 			this.pauseSchedulerAndActions();
 			pauseScene = new GamePauseScene();
 			this.addChild(pauseScene, 9999);
@@ -262,12 +280,38 @@ public class GameRunTimeCCLayer extends CCLayer {
 				point)) {
 			CCDirector.sharedDirector().resume();
 			this.removeChild(pauseScene, true);
+			pauseScene=null;
+			long time_pause=(timeTestEnd-timeTestStart);
+//			System.out.println("!!!!   "+time_pause);
+			
+			end_game=new Timer();
+			if(new_end_time>time_pause)
+				end_game.schedule(new end_game_class(), (new_end_time=(int)(new_end_time-time_pause))+3000);
+			// System.out.println("!!!!!!!asmbbh   "+file_read.get_button_num());
+			//System.out.println("!!!!!!!asmbbh   "+file_read.get_end_time());
+			for (int i = 0; i < game_button.length; i++){
+				if(tag[0]!=i&&tag[1]!=i&&tag[2]!=i&&tag[3]!=i){
+					game_button[i].set_tag(4);
+					if(new_start_time[i]-time_pause>0)
+						game_button[i].set_sleep((new_start_time[i]=new_start_time[i]-(int)time_pause)+3000);
+					else
+						game_button[i].set_sleep(3000);
+				}
+				else if(tag[0]==i||tag[1]==i||tag[2]==i||tag[3]==i){
+					game_button[i].set_tag(3);
+				}
+			}
+			start_game_3.schedule(new start_game_class_3(), 0);
+			start_game_2.schedule(new start_game_class_2(), 1000);
+			start_game_2.schedule(new start_game_class_1(), 2000);
+			timeTestStart=System.currentTimeMillis()+3000;
 		}
 		if (pauseScene!=null&&CGRect.containsPoint(pauseScene.get_back().getBoundingBox(), point)) {
 			for (int i = 0; i < game_button.length; i++)
 				game_button[i].end_time();
 			end_game.cancel();
 			this.removeChild(pauseScene, true);
+			pauseScene=null;
 			Intent intent = new Intent(CCDirector.sharedDirector()
 					.getActivity(), GameStartActivity.class);
 			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | 
@@ -279,6 +323,7 @@ public class GameRunTimeCCLayer extends CCLayer {
 				game_button[i].end_time();
 			end_game.cancel();
 			this.removeChild(pauseScene, true);
+			pauseScene=null;
 			Intent intent = new Intent(CCDirector.sharedDirector()
 					.getActivity(), MainActivity.class);
 			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | 
@@ -287,7 +332,7 @@ public class GameRunTimeCCLayer extends CCLayer {
 		}
 		for (int i = 0; i < 4; i++) {
 			lock.lock();
-			if (tag[i] != -1
+			if (pauseScene==null&&tag[i] != -1
 					&& CGRect.containsPoint(game_button[tag[i]].get_CCS()
 							.getBoundingBox(), point)
 					&& game_button[tag[i]].get_CCS().getPosition().y < 100

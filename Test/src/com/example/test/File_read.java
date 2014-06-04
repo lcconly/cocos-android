@@ -36,8 +36,9 @@ public class File_read {
 	public void init(String name){
 		BufferedReader bufferedReader = null;
 		InputStreamReader inputStreamReader = null; 
+		InputStream inputStream=null;
 		try {
-			InputStream inputStream = CCDirector.sharedDirector().getActivity()
+			inputStream = CCDirector.sharedDirector().getActivity()
 					.getResources().openRawResource(R.raw.music);  
 			inputStreamReader = new InputStreamReader(inputStream, "gbk");
 			bufferedReader = new BufferedReader(inputStreamReader);
@@ -62,6 +63,20 @@ public class File_read {
 			System.out.println("!!!!asasa");
 			e.printStackTrace();
 		} finally {
+			if(inputStream!=null){
+			try {
+				inputStream.close();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}}
+			if(inputStreamReader!=null){
+			try {
+				inputStreamReader.close();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}}
 			if (bufferedReader != null) {
 				try {
 					bufferedReader.close();

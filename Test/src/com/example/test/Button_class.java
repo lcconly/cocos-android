@@ -22,30 +22,67 @@ public class Button_class extends CCLayer{
 	private int place;
 	private int[] grade;
 	private int start_time;
+	private int tags=0;
+	private int sleep_time;
 	GameRunTimeCCLayer ccLayer;
+	TimerTask aTask;
 	public CCSprite get_CCS(){
 		return buttonCcSprite;
+	}
+	public void set_sleep(int sleep_time){
+		this.sleep_time=sleep_time;
 	}
 	public Timer getTimer(){
 		return timer;
 	}
+	public void set_tag(int tag) {
+		this.tags=tag;
+	}
 	public Button_class(int id,int kind,int place,int start_time,int[] grade,GameRunTimeCCLayer ccLayer){
 		this.id=id;
+		tags=0;
 		this.kind=kind;
 		this.place=place;
 		this.start_time=start_time;
 		this.grade=grade;
 		this.ccLayer=ccLayer;
+		aTask=new button_start();
 		timer=new Timer();
 	} 
 	public void start_run(){
-		timer.schedule(new button_start(), start_time);			
+		if(start_time>0){
+
+			timer.schedule(aTask, start_time);			
+		}	
 	}
 	class button_start extends TimerTask{
 
 		@Override
 		public void run() {
 			// TODO Auto-generated method stub
+			while(tags==1){
+				try {
+					Thread.sleep(30);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			if(tags==4){
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				try {
+					Thread.sleep(sleep_time);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				tags=0;
+			}
 			if(kind==1)
 				 buttonCcSprite=CCSprite.sprite("touch_button.png");
 			else if(kind==2)
@@ -116,6 +153,26 @@ public class Button_class extends CCLayer{
 				 GameRunTimeCCLayer.lock.unlock();
 			}
 			while(true){
+				if(tags==1){
+					try {
+						Thread.sleep(30);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					continue;
+				}
+				if(tags==3){
+					try {
+						Thread.sleep(3000);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					tags=0;
+				}
+				if(tags==2)
+					break;
 				buttonCcSprite.setPosition(buttonCcSprite.getPosition().x, (buttonCcSprite.getPosition().y=buttonCcSprite.getPosition().y-speed));
 				try {
 					Thread.sleep(30);
@@ -179,6 +236,7 @@ public class Button_class extends CCLayer{
 //		return true;
 //	 }
 	 public void end_time(){
+		 tags=2;
 		 timer.cancel();
 	 }
 }
