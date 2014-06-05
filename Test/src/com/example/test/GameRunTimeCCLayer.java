@@ -188,19 +188,11 @@ public class GameRunTimeCCLayer extends CCLayer {
 			}
 			GameRunTimeCCLayer.this.removeChild(start_pic_1, true);
 			start_pic_1=null;
-			//play background music
-			mp=new MediaPlayer();
-	        try {
-	            //mp.setDataSource("youngandbeautiful.mp3");//设置路径
-	        	mp = MediaPlayer.create(CCDirector.sharedDirector().getActivity(), R.raw.youngandbeautiful);//设置路径
-	            mp.prepare();//缓冲
-	        } catch (IllegalArgumentException e) {
-	            e.printStackTrace();
-	        } catch (IllegalStateException e) {
-	            e.printStackTrace();
-	        } catch (IOException e) {
-	            e.printStackTrace();
-	        }
+			//play background music 
+			//mp.setDataSource("youngandbeautiful.mp3");//设置路径
+	        mp = MediaPlayer.create(CCDirector.sharedDirector().getActivity(), R.raw.youngandbeautiful);//设置路径
+	        //mp.prepare();//缓冲
+
 	        am=(AudioManager) CCDirector.sharedDirector().getActivity().getSystemService(Context.AUDIO_SERVICE);
 	        max=am.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
 	        
