@@ -69,21 +69,11 @@ public class RankActivity extends ActionBarActivity {
 			Collections.sort(arrayList, new SortByScore());
 			
 			mList  = new ArrayList<Map<String,Object>>();
-			/*Map<String, Object> map = new HashMap<String, Object>(); 
-			map.put("Name", "¥Û—ß∞‘"); 
-			map.put("Score",  "999999999999"); 
-			mList.add(map);
-			mList.add(map);
-			mList.add(map);
-			mList.add(map);mList.add(map);mList.add(map);mList.add(map);
-			mList.add(map);mList.add(map);mList.add(map);mList.add(map);
-			mList.add(map);mList.add(map);mList.add(map);mList.add(map);
-			mList.add(map);mList.add(map);mList.add(map);mList.add(map);*/
 			
 			for(NameScore nameScore:arrayList) {
 				
-				System.out.println(nameScore.getName());
-				System.out.println(nameScore.getScore());
+				//System.out.println(nameScore.getName());
+				//System.out.println(nameScore.getScore());
 				
 				Map<String, Object> map=new HashMap<String, Object>();
 				map.put("Name", nameScore.getName());
