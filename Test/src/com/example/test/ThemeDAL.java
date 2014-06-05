@@ -74,12 +74,12 @@ public class ThemeDAL {
     	return themeCursor;
     }
     
-    public boolean ifEmpty(){
+    /*public boolean ifEmpty(){
     	if(themeCursor.isNull(1)){
     		return true;
     	}
     	else{
     		return false;
     	}
-    }
+    }*/
 }

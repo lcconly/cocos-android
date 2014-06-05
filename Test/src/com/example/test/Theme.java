@@ -11,10 +11,10 @@ public class Theme implements ThemeItem {
 
     private String _themeName;
     private String _themeFile;
-    private boolean _useFlag;
-    private boolean _available;
+    private int _useFlag;
+    private int _available;
 
-    public Theme(String themeName, String themeFile, boolean useFlag, boolean available){
+    public Theme(String themeName, String themeFile, int useFlag, int available){
         _themeName = themeName;
         _themeFile = themeFile;
         _useFlag = useFlag;
@@ -28,10 +28,10 @@ public class Theme implements ThemeItem {
     public String getThemeFile(){
         return _themeFile;
     }
-    public boolean getUseFlag(){
+    public int getUseFlag(){
         return _useFlag;
     }
-    public boolean getAvailable(){
+    public int getAvailable(){
         return _available;
     }
 

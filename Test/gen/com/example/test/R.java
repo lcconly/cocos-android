@@ -1129,6 +1129,7 @@ containing a value of this type.
         public static final int dialog=0x7f06000e;
         public static final int disableHome=0x7f060008;
         public static final int dropdown=0x7f06000f;
+        public static final int editText1=0x7f06003f;
         public static final int edit_query=0x7f060030;
         public static final int end=0x7f060013;
         public static final int expand_activities_button=0x7f060026;
@@ -1138,7 +1139,6 @@ containing a value of this type.
         public static final int icon=0x7f06002a;
         public static final int ifRoom=0x7f06000a;
         public static final int image=0x7f060027;
-        public static final int input_name=0x7f06003f;
         public static final int linearLayout1=0x7f060041;
         public static final int listMode=0x7f060001;
         public static final int list_item=0x7f060029;

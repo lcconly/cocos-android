@@ -330,6 +330,7 @@ public class GameRunTimeCCLayer extends CCLayer {
 			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | 
                     Intent.FLAG_ACTIVITY_NEW_TASK);
 			CCDirector.sharedDirector().getActivity().startActivity(intent);
+			CCDirector.sharedDirector().getActivity().finish();
 		}
 
 	}
