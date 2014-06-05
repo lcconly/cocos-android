@@ -1,10 +1,11 @@
 package com.example.test;
 
 import android.os.Bundle;
-import android.app.Activity;
+//import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,6 +21,8 @@ public class GameEndActivity extends ActionBarActivity {
 	private EditText nameEditText;
 	private TextView scoreTextView;
 	private Button button;
+	
+	private int score_value;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -32,9 +35,12 @@ public class GameEndActivity extends ActionBarActivity {
 		actionBar.setHomeButtonEnabled(true);
 		actionBar.setIcon(R.drawable.home);
 		
-		nameEditText=(EditText)findViewById(R.id.input_name);
+		nameEditText=(EditText)findViewById(R.id.editText1);
 		
-		//scoreTextView=(TextView)findViewById(R.id.)
+		scoreTextView=(TextView)findViewById(R.id.textView3);
+		Intent intent=getIntent();
+		score_value=intent.getIntExtra("grade_game", -1);
+		scoreTextView.setText(String.valueOf(score_value));
 		
 		button=(Button)findViewById(R.id.button_save);
 		button.setOnClickListener(new listener());
@@ -50,17 +56,32 @@ public class GameEndActivity extends ActionBarActivity {
 				Toast.makeText(getApplicationContext(), "名字不能为空！", Toast.LENGTH_SHORT).show();
 			}
 			else {
-				Score score=new Score(name,"99999");
+				Score score=new Score(name,String.valueOf(score_value));
 				ScoreDAL dal=new ScoreDAL(GameEndActivity.this);
 				dal.insert(score);
 				
-				Intent intent=new Intent(GameEndActivity.this, GameStartActivity.class);
-		        startActivity(intent);
+				//Intent intent=new Intent(GameEndActivity.this, GameStartActivity.class);
+		        //startActivity(intent);
+		        GameEndActivity.this.finish();
+		        
 			}
 			
 		}
 		
 	}
+	
+	@Override  
+    public boolean onKeyDown(int keyCode, KeyEvent event) { 
+		
+        if(keyCode == KeyEvent.KEYCODE_BACK) {
+        	
+        	//Intent intent=new Intent(this, GameStartActivity.class);
+	        //startActivity(intent);
+	        finish();
+	        
+        }        
+        return false;    
+    }
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {

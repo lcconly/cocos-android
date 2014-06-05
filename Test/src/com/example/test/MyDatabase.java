@@ -60,8 +60,8 @@ public class MyDatabase extends SQLiteOpenHelper {
             db.execSQL("create table " + THEME_TABLE_NAME + " ( _id integer primary key autoincrement, "
                     + THEME_COLUMN1 + " text, "
                     + THEME_COLUMN2 + " text, "
-                    + THEME_COLUMN3 + " boolean, "
-                    + THEME_COLUMN4 + " boolean ); ");
+                    + THEME_COLUMN3 + " int, "
+                    + THEME_COLUMN4 + " int ); ");
             db.execSQL("create table " + SETTINGS_TABLE_NAME + " ( _id integer primary key autoincrement, "
                     + SETTINGS_COLUMN1 + " text, "
                     + SETTINGS_COLUMN2 + " text ); ");

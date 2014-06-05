@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/seekBar1"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="27dp"
+        android:layout_marginTop="60dp"
         android:textColor="#ffffff"
         android:text="@string/set_volume" />
 
@@ -27,7 +27,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="14dp" />
 
-    <TextView
+    <!-- TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -43,6 +43,6 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/textView2"
         android:layout_below="@+id/textView2"
-        android:layout_marginTop="18dp" />
+        android:layout_marginTop="18dp" / -->
 
 </RelativeLayout>

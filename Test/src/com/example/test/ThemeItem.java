@@ -11,6 +11,6 @@ public interface ThemeItem {
 
     String getThemeName();
     String getThemeFile();
-    boolean getUseFlag();
-    boolean getAvailable();
+    int getUseFlag();
+    int getAvailable();
 }
