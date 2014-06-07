@@ -8,7 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
  * Created with IntelliJ IDEA.
  * User: Shannon
  * Date: 14-5-11
- * Time: 下午4:03
+ * Time: 涓����4:03
  * To change this template use File | Settings | File Templates.
  */
 public class MyDatabase extends SQLiteOpenHelper {
@@ -21,6 +21,7 @@ public class MyDatabase extends SQLiteOpenHelper {
     public static final String SONG_COLUMN3 = "timeline_easy";
     public static final String SONG_COLUMN4 = "timeline_normal";
     public static final String SONG_COLUMN5 = "timeline_hard";
+    public static final String SONG_COLUMN6 = "singer_name";
 
     //score table
     public static final String SCORE_TABLE_NAME = "socre_table";
@@ -53,7 +54,8 @@ public class MyDatabase extends SQLiteOpenHelper {
                     + SONG_COLUMN2 + " text, "
                     + SONG_COLUMN3 + " text, "
                     + SONG_COLUMN4 + " text, "
-                    + SONG_COLUMN5 + " text ); ");
+                    + SONG_COLUMN5 + " text, "
+                    + SONG_COLUMN6 + " text ); ");
             db.execSQL("create table " + SCORE_TABLE_NAME + " ( _id integer primary key autoincrement, "
                     + SCORE_COLUMN1 + " text, "
                     + SCORE_COLUMN2 + " text ); ");

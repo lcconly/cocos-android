@@ -22,7 +22,7 @@ public class SongDAL {
         MyDatabase dbHelper = new MyDatabase(context);
         myDb = dbHelper.getWritableDatabase();
         songCursor = myDb.query(MyDatabase.SONG_TABLE_NAME, new String[]{ "_id", MyDatabase.SONG_COLUMN1,MyDatabase.SONG_COLUMN2, MyDatabase.SONG_COLUMN3
-        ,MyDatabase.SONG_COLUMN4, MyDatabase.SONG_COLUMN5},null,null,null,null,null);
+        ,MyDatabase.SONG_COLUMN4, MyDatabase.SONG_COLUMN5, MyDatabase.SONG_COLUMN6},null,null,null,null,null);
 
         songCursor.moveToFirst();
 
@@ -35,6 +35,7 @@ public class SongDAL {
         song.put(MyDatabase.SONG_COLUMN3, songItem.getSongEasy());
         song.put(MyDatabase.SONG_COLUMN4, songItem.getSongNormal());
         song.put(MyDatabase.SONG_COLUMN5, songItem.getSongHard());
+        song.put(MyDatabase.SONG_COLUMN6, songItem.getSingerName());
 
         long returnVal = myDb.insert(MyDatabase.SONG_TABLE_NAME, null, song);
         songCursor.requery();
@@ -53,6 +54,7 @@ public class SongDAL {
         song.put(MyDatabase.SONG_COLUMN3, songItem.getSongEasy());
         song.put(MyDatabase.SONG_COLUMN4, songItem.getSongNormal());
         song.put(MyDatabase.SONG_COLUMN5, songItem.getSongHard());
+        song.put(MyDatabase.SONG_COLUMN6, songItem.getSingerName());
         long returnVal = myDb.update(MyDatabase.SONG_TABLE_NAME, song, MyDatabase.SONG_COLUMN1+"=?",new String[]{songItem.getSongName()});
 
         songCursor.requery();

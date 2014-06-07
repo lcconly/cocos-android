@@ -34,6 +34,7 @@ public class GameRunTimeCCLayer extends CCLayer {
 	private CCSprite start_pic_2 = null;
 	private CCSprite start_pic_3 = null;
 	private String theme_button;
+	private String music_name;
 	private int theme_button_id;
 	private int easy_son_on;
 	private CCLabelAtlas lable_game_grade = null;
@@ -202,7 +203,10 @@ public class GameRunTimeCCLayer extends CCLayer {
 			start_pic_1=null;
 			//play background music 
 			//mp.setDataSource("youngandbeautiful.mp3");//设置路径
-	        mp = MediaPlayer.create(CCDirector.sharedDirector().getActivity(), R.raw.youngandbeautiful);//设置路径
+			if(music_name=="youngandbeautiful")
+				mp = MediaPlayer.create(CCDirector.sharedDirector().getActivity(), R.raw.youngandbeautiful);//设置路径
+			else if(music_name=="cktsdxdgl")
+				mp = MediaPlayer.create(CCDirector.sharedDirector().getActivity(), R.raw.cktsdxdgl);//设置路径
 	        //mp.prepare();//缓冲
 
 	        am=(AudioManager) CCDirector.sharedDirector().getActivity().getSystemService(Context.AUDIO_SERVICE);
