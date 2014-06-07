@@ -97,8 +97,40 @@ public class Button_class extends CCLayer{
 				 buttonCcSprite=CCSprite.sprite("touch_button.png");
 			else if(kind==2)
 				buttonCcSprite=CCSprite.sprite("touch_button_red.png");
+			if(tags==4){
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				try {
+					Thread.sleep(sleep_time);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				tags=0;
+			}
+
 			if(place==1){
 				 while(GameRunTimeCCLayer.tag[0]!=-1){
+						if(tags==4){
+							try {
+								Thread.sleep(1000);
+							} catch (InterruptedException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+							try {
+								Thread.sleep(sleep_time);
+							} catch (InterruptedException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+							tags=0;
+						}
+
 					 try {
 						Thread.sleep(30);
 					} catch (InterruptedException e) {
@@ -106,6 +138,22 @@ public class Button_class extends CCLayer{
 						e.printStackTrace();
 					}
 				 }
+					if(tags==4){
+						try {
+							Thread.sleep(1000);
+						} catch (InterruptedException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+						try {
+							Thread.sleep(sleep_time);
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						tags=0;
+					}
+
 				 GameRunTimeCCLayer.lock.lock();
 				 buttonCcSprite.setAnchorPoint(0, 0);
 				 buttonCcSprite.setPosition(100, 550);
@@ -115,6 +163,22 @@ public class Button_class extends CCLayer{
 			}
 			else if(place==2){
 				 while(GameRunTimeCCLayer.tag[1]!=-1){
+						if(tags==4){
+							try {
+								Thread.sleep(1000);
+							} catch (InterruptedException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+							try {
+								Thread.sleep(sleep_time);
+							} catch (InterruptedException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+							tags=0;
+						}
+
 					 try {
 						Thread.sleep(30);
 					} catch (InterruptedException e) {
@@ -122,7 +186,39 @@ public class Button_class extends CCLayer{
 						e.printStackTrace();
 					}
 				 }
+					if(tags==4){
+						try {
+							Thread.sleep(1000);
+						} catch (InterruptedException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+						try {
+							Thread.sleep(sleep_time);
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						tags=0;
+					}
+
 				 GameRunTimeCCLayer.lock.lock();
+					if(tags==4){
+						try {
+							Thread.sleep(1000);
+						} catch (InterruptedException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+						try {
+							Thread.sleep(sleep_time);
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						tags=0;
+					}
+
 				 buttonCcSprite.setAnchorPoint(0, 0);
 				 buttonCcSprite.setPosition(370, 550);
 				 Button_class.this.ccLayer.addChild(buttonCcSprite, 5, 5);
@@ -132,6 +228,22 @@ public class Button_class extends CCLayer{
 			}
 			else if(place==3){
 				 while(GameRunTimeCCLayer.tag[2]!=-1){
+						if(tags==4){
+							try {
+								Thread.sleep(1000);
+							} catch (InterruptedException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+							try {
+								Thread.sleep(sleep_time);
+							} catch (InterruptedException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+							tags=0;
+						}
+
 					 try {
 						Thread.sleep(30);
 					} catch (InterruptedException e) {
@@ -140,6 +252,22 @@ public class Button_class extends CCLayer{
 					}
 				 }
 				 GameRunTimeCCLayer.lock.lock();
+					if(tags==4){
+						try {
+							Thread.sleep(1000);
+						} catch (InterruptedException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+						try {
+							Thread.sleep(sleep_time);
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						tags=0;
+					}
+
 				 buttonCcSprite.setAnchorPoint(0, 0);
 				 buttonCcSprite.setPosition(370+270, 550);
 				 Button_class.this.ccLayer.addChild(buttonCcSprite, 6, 6);
@@ -148,6 +276,22 @@ public class Button_class extends CCLayer{
 			}
 			else if(place==4){
 				 while(GameRunTimeCCLayer.tag[3]!=-1){
+						if(tags==4){
+							try {
+								Thread.sleep(1000);
+							} catch (InterruptedException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+							try {
+								Thread.sleep(sleep_time);
+							} catch (InterruptedException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+							tags=0;
+						}
+
 					 try {
 						Thread.sleep(30);
 					} catch (InterruptedException e) {
@@ -156,6 +300,22 @@ public class Button_class extends CCLayer{
 					}
 				 }
 				 GameRunTimeCCLayer.lock.lock();
+					if(tags==4){
+						try {
+							Thread.sleep(1000);
+						} catch (InterruptedException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+						try {
+							Thread.sleep(sleep_time);
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						tags=0;
+					}
+
 				 buttonCcSprite.setAnchorPoint(0, 0);
 				 buttonCcSprite.setPosition(370+270+270, 550);
 				 Button_class.this.ccLayer.addChild(buttonCcSprite, 7, 7);
@@ -185,7 +345,7 @@ public class Button_class extends CCLayer{
 					break;
 				buttonCcSprite.setPosition(buttonCcSprite.getPosition().x, (buttonCcSprite.getPosition().y=buttonCcSprite.getPosition().y-speed));
 				try {
-					Thread.sleep(30);
+					Thread.sleep(20);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

@@ -203,9 +203,9 @@ public class GameRunTimeCCLayer extends CCLayer {
 			start_pic_1=null;
 			//play background music 
 			//mp.setDataSource("youngandbeautiful.mp3");//设置路径
-			if(music_name=="youngandbeautiful")
-				mp = MediaPlayer.create(CCDirector.sharedDirector().getActivity(), R.raw.youngandbeautiful);//设置路径
-			else if(music_name=="cktsdxdgl")
+			//if(music_name=="youngandbeautiful")
+			//	mp = MediaPlayer.create(CCDirector.sharedDirector().getActivity(), R.raw.youngandbeautiful);//设置路径
+			//else if(music_name=="cktsdxdgl")
 				mp = MediaPlayer.create(CCDirector.sharedDirector().getActivity(), R.raw.cktsdxdgl);//设置路径
 	        //mp.prepare();//缓冲
 
@@ -420,22 +420,56 @@ public class GameRunTimeCCLayer extends CCLayer {
 	// this.addChild(lable_game_grade,8,8);
 	//
 	// }
+	public void pause_game(){
+		CCDirector.sharedDirector().pause();
+		if(mp!=null)
+			mp.pause();
+		timeTestEnd=System.currentTimeMillis();//记录结束时间
+		for (int i = 0; i < game_button.length; i++){
+			game_button[i].set_tag(1);
+			new_start_time[i]=new_start_time[i]-(int)(timeTestEnd-timeTestStart);
+		}
+		end_game.cancel();
+		this.pauseSchedulerAndActions();
+		pauseScene = new GamePauseScene();
+		this.addChild(pauseScene, 9999);
+	}
+	public void continue_game(){
+		CCDirector.sharedDirector().resume();
+		this.removeChild(pauseScene, true);
+		pauseScene=null;
+		long time_pause=(timeTestEnd-timeTestStart);
+//		System.out.println("!!!!   "+time_pause);
+		end_game=new Timer();
+		if(new_end_time>time_pause)
+			end_game.schedule(new end_game_class(), (new_end_time=(new_end_time-(int)time_pause))+3000);
+		// System.out.println("!!!!!!!asmbbh   "+file_read.get_button_num());
+		//System.out.println("!!!!!!!asmbbh   "+file_read.get_end_time());
+		for (int i = 0; i < game_button.length; i++){
+			if(tag[0]!=i&&tag[1]!=i&&tag[2]!=i&&tag[3]!=i){
+				game_button[i].set_tag(4);
+				if(new_start_time[i]-time_pause>0)
+					game_button[i].set_sleep((new_start_time[i]=new_start_time[i]-(int)time_pause)+3000);
+				else {
+					game_button[i].set_sleep(3000);
+				}
+			}
+			else if(tag[0]==i||tag[1]==i||tag[2]==i||tag[3]==i){
+				game_button[i].set_tag(3);
+			}
+		}
+		start_game_3.schedule(new start_game_class_3(), 0);
+		start_game_2.schedule(new start_game_class_2(), 1000);
+		start_game_1.schedule(new start_game_class_1_continue(), 2000);
+		timeTestStart=System.currentTimeMillis()+3000;
+
+	}
 	@Override
 	public boolean ccTouchesBegan(MotionEvent event) {
 
 		CGPoint point = this.convertTouchToNodeSpace(event);
 		if (pauseScene==null&&CGRect.containsPoint(sprite_game_pause.getBoundingBox(), point)) {
-			CCDirector.sharedDirector().pause();
-			mp.pause();
-			timeTestEnd=System.currentTimeMillis();//记录结束时间
-			for (int i = 0; i < game_button.length; i++){
-				game_button[i].set_tag(1);
-				new_start_time[i]=new_start_time[i]-(int)(timeTestEnd-timeTestStart);
-			}
-			end_game.cancel();
-			this.pauseSchedulerAndActions();
-			pauseScene = new GamePauseScene();
-			this.addChild(pauseScene, 9999);
+			pause_game();
 			// System.out.println("pause!!!");
 			// CCDirector.sharedDirector().replaceScene(GamePauseScene.scene());
 			// CCRenderTexture renderTexture =
@@ -448,33 +482,7 @@ public class GameRunTimeCCLayer extends CCLayer {
 		}
 		if (pauseScene!=null&&CGRect.containsPoint(pauseScene.get_continue().getBoundingBox(),
 				point)) {
-			CCDirector.sharedDirector().resume();
-			this.removeChild(pauseScene, true);
-			pauseScene=null;
-			long time_pause=(timeTestEnd-timeTestStart);
-//			System.out.println("!!!!   "+time_pause);
-			end_game=new Timer();
-			if(new_end_time>time_pause)
-				end_game.schedule(new end_game_class(), (new_end_time=(new_end_time-(int)time_pause))+3000);
-			// System.out.println("!!!!!!!asmbbh   "+file_read.get_button_num());
-			//System.out.println("!!!!!!!asmbbh   "+file_read.get_end_time());
-			for (int i = 0; i < game_button.length; i++){
-				if(tag[0]!=i&&tag[1]!=i&&tag[2]!=i&&tag[3]!=i){
-					game_button[i].set_tag(4);
-					if(new_start_time[i]-time_pause>0)
-						game_button[i].set_sleep((new_start_time[i]=new_start_time[i]-(int)time_pause)+3000);
-					else {
-						game_button[i].set_sleep(3000);
-					}
-				}
-				else if(tag[0]==i||tag[1]==i||tag[2]==i||tag[3]==i){
-					game_button[i].set_tag(3);
-				}
-			}
-			start_game_3.schedule(new start_game_class_3(), 0);
-			start_game_2.schedule(new start_game_class_2(), 1000);
-			start_game_1.schedule(new start_game_class_1_continue(), 2000);
-			timeTestStart=System.currentTimeMillis()+3000;
+			continue_game();
 		}
 		if (pauseScene!=null&&CGRect.containsPoint(pauseScene.get_back().getBoundingBox(), point)) {
 			for (int i = 0; i < game_button.length; i++)
@@ -565,7 +573,6 @@ public class GameRunTimeCCLayer extends CCLayer {
 		// }
 		return true;
 	}
-
 	// public void button_1_start(){
 	// if(timer_button_1==null)
 	// timer_button_1=new Timer();
