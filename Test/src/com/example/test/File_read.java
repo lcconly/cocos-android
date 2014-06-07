@@ -11,6 +11,7 @@ import org.cocos2d.nodes.CCDirector;
 import org.cocos2d.nodes.CCLabelAtlas;
 
 import android.R.integer;
+import android.R.string;
 import android.os.IInterface;
 import android.util.Log;
 
@@ -38,7 +39,8 @@ public class File_read {
 		InputStreamReader inputStreamReader = null; 
 		InputStream inputStream=null;
 		try {
-			inputStream = CCDirector.sharedDirector().getActivity()
+			if(name.equals("music.txt"))
+				inputStream = CCDirector.sharedDirector().getActivity()
 					.getResources().openRawResource(R.raw.music);  
 			inputStreamReader = new InputStreamReader(inputStream, "gbk");
 			bufferedReader = new BufferedReader(inputStreamReader);

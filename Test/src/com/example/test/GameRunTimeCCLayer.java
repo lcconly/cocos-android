@@ -16,6 +16,7 @@ import org.cocos2d.types.CGRect;
 import android.R.integer;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.view.MotionEvent;
@@ -32,6 +33,9 @@ public class GameRunTimeCCLayer extends CCLayer {
 	private CCSprite start_pic_1 = null;
 	private CCSprite start_pic_2 = null;
 	private CCSprite start_pic_3 = null;
+	private String theme_button;
+	private int theme_button_id;
+	private int easy_son_on;
 	private CCLabelAtlas lable_game_grade = null;
 	// private Formatter grade_temp=new Formatter();
 	private int[] game_grade = new int[1];
@@ -66,6 +70,14 @@ public class GameRunTimeCCLayer extends CCLayer {
 	}
 	public GameRunTimeCCLayer() {
 		this.setIsTouchEnabled(true);
+		SharedPreferences preferences=CCDirector.sharedDirector().getActivity().getSharedPreferences("theme", Context.MODE_PRIVATE);
+		theme_button=preferences.getString("color", "orange");
+		if(theme_button.equals("orange"))
+			theme_button_id=1;
+		else if(theme_button.equals("red"))
+			theme_button_id=2;
+		Intent eaIntent=CCDirector.sharedDirector().getActivity().getIntent();
+		easy_son_on=eaIntent.getIntExtra("state", 1);
 		init();
 		// game_started();
 		// date=new Date();
@@ -89,7 +101,7 @@ public class GameRunTimeCCLayer extends CCLayer {
 		// System.out.println("!!!!!!!asmbbh   "+file_read.get_button_num());
 		// System.out.println("!!!!!!!asmbbh   "+file_read.get_end_time());
 		for (int i = 0; i < file_read.get_button_num(); i++) {
-			game_button[i] = new Button_class(i, 1,
+			game_button[i] = new Button_class(i, theme_button_id,
 					file_read.get_certain_palce(i),
 					file_read.get_certain_start_time(i) + 3000, game_grade,
 					this);
@@ -496,7 +508,10 @@ public class GameRunTimeCCLayer extends CCLayer {
 					&& game_button[tag[i]].get_CCS().getPosition().y < 100
 					&& game_button[tag[i]].get_CCS().getPosition().y >= 25) {
 				game_grade[0] += 50;
-				game_button[tag[i]].set_CCS(CCSprite.sprite("touched_button.png"));				// grade_temp.format("%06d", game_grade);
+				if(theme_button_id==1)
+					game_button[tag[i]].set_CCS(CCSprite.sprite("touched_button.png"));				// grade_temp.format("%06d", game_grade);
+				else if(theme_button_id==2)
+					game_button[tag[i]].set_CCS(CCSprite.sprite("touched_button_red.png"));	
 				lable_game_grade.setString("" + game_grade[0]);
 				good_perfect_timer=new Timer();
 				good_perfect_timer.schedule(new good_game(), 0);
@@ -510,8 +525,10 @@ public class GameRunTimeCCLayer extends CCLayer {
 					&& game_button[tag[i]].get_CCS().getPosition().y < 25
 					&& game_button[tag[i]].get_CCS().getPosition().y >= -50) {
 				game_grade[0] += 100;
-				game_button[tag[i]].set_CCS(CCSprite.sprite("touched_button.png"));
-				// grade_temp.format("%06d", game_grade);
+				if(theme_button_id==1)
+					game_button[tag[i]].set_CCS(CCSprite.sprite("touched_button.png"));				// grade_temp.format("%06d", game_grade);
+				else if(theme_button_id==2)
+					game_button[tag[i]].set_CCS(CCSprite.sprite("touched_button_red.png"));					// grade_temp.format("%06d", game_grade);
 				lable_game_grade.setString("" + game_grade[0]);
 				good_perfect_timer=new Timer();
 				good_perfect_timer.schedule(new perfect_game(), 0);
