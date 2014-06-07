@@ -8,7 +8,7 @@
         android:id="@+id/textTo" 
         android:layout_width="wrap_content" 
         android:layout_height="wrap_content" 
-        android:textSize="16sp" 
+        android:textSize="20sp" 
         android:textColor="#dddddd" 
         />     
          
@@ -17,7 +17,7 @@
         android:layout_width="wrap_content" 
         android:layout_height="wrap_content" 
         android:layout_below="@id/textTo" 
-        android:textSize="12sp" 
+        android:textSize="16sp" 
         android:textColor="#999999" 
         /> 
      

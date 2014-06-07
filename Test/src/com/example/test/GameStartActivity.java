@@ -7,6 +7,7 @@ import java.util.Map;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 //import android.view.Menu;
 import android.view.View;
@@ -22,25 +23,76 @@ public class GameStartActivity extends Activity {
 	private ListView mListView; 
 	private SimpleAdapter mListAdapter;
 	
-	Button button1;
-	Button button2;
-	Button button3;
-	int state; //1表示简单，2表示普通，3表示困难
+	private Button button1;
+	private Button button2;
+	private Button button3;
+	private int state; //1表示简单，2表示普通，3表示困难
+	
+	private SongDAL dal;
+	private Cursor cursor;
+	
+	private String songName;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_game_start);
+		
+		dal=new SongDAL(this);
+		cursor=dal.getCursor();
+		
+		if(cursor.moveToFirst()==false) {
+			Song song1=new Song("Young and Beautiful", "youngandbeautiful.mp3", "youngandbeautiful_1.txt", "youngandbeautiful_2.txt", "youngandbeautiful_3.txt", "Lana Del Rey");
+			Song song2=new Song("残酷天使的行动纲领", "cktsdxdgl.mp3", "cktsdxdgl_1.txt", "cktsdxdgl_2.txt", "cktsdxdgl_3.txt", "高桥洋子");
+			dal.insert(song1);
+			dal.insert(song2);
+			
+			/*mList  = new ArrayList<Map<String,Object>>();
+			
+			Map<String, Object> map1= new HashMap<String, Object>();
+			Map<String, Object> map2= new HashMap<String, Object>();
+			
+			map1.put("First", "Lana Del Rey"); 
+			map1.put("Next",  "Young and Beautiful");
+			map1.put("State", "");
+			mList.add(map1);
+			
+			map2.put("First", "高桥洋子"); 
+			map2.put("Next",  "残酷天使的行动纲领");
+			map2.put("State", "");
+			mList.add(map2);*/
+		}
+		
+		cursor.moveToFirst();
+		
 		mList  = new ArrayList<Map<String,Object>>();
+		
+		while(true) {
+			
+			Map<String, Object> map = new HashMap<String, Object>();
+			
+			String songNameString=cursor.getString(cursor.getColumnIndex(MyDatabase.SONG_COLUMN1));
+			String singerNameString=cursor.getString(cursor.getColumnIndex(MyDatabase.SONG_COLUMN6));
+			
+			map.put("First", singerNameString); 
+			map.put("Next",  songNameString);
+			map.put("State", "");
+			mList.add(map);
+			
+			if(cursor.moveToNext()==false)
+				break;
+				
+		}
+		
 		Map<String, Object> map = new HashMap<String, Object>(); 
-		map.put("First", "这是标题"); 
-		map.put("Next",  "这是内容"); 
-		map.put("State", "状态");
+		map.put("First", "待定"); 
+		map.put("Next",  "待定"); 
+		map.put("State", "");
 		mList.add(map);
 		mList.add(map);
 		mList.add(map);
-		mList.add(map);mList.add(map);mList.add(map);mList.add(map);
-		mList.add(map);mList.add(map);mList.add(map);mList.add(map);
+		mList.add(map);
+		
 		mListAdapter = new SimpleAdapter(this, mList, R.layout.list_row, 
 		new String[]{"First", "Next", "State"}, 
 		new int[]{R.id.textOwn, R.id.textTo, R.id.textState}); 
@@ -54,10 +106,29 @@ public class GameStartActivity extends Activity {
                     long arg3) {
                 // TODO Auto-generated method stub
                 
-                    Intent intent = new Intent(GameStartActivity.this, GameActivity.class);
-                    intent.putExtra("state", state);
-                    startActivity(intent);
-               
+            		Map<String, Object> map=mList.get(arg2);
+            		String songNameString=(String)map.get("Next");
+            		
+            		if(songNameString.equals("Young and Beautiful") || songNameString.equals("残酷天使的行动纲领")) {
+            			if(songNameString.equals("Young and Beautiful")) {
+            				songName="youngandbeautiful";
+            			}
+            			else if(songNameString.equals("残酷天使的行动纲领")) {
+            				songName="cktsdxdgl";
+            			}
+            			else
+            				;
+            			
+            			 Intent intent = new Intent(GameStartActivity.this, GameActivity.class);
+                         intent.putExtra("state", state);
+                         intent.putExtra("songName", songName);
+                         startActivity(intent);
+                         
+            		}
+            		else {
+            			
+            		}
+            		
             }
              
         });

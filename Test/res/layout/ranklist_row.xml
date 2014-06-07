@@ -7,7 +7,7 @@
         android:id="@+id/textName" 
         android:layout_width="wrap_content" 
         android:layout_height="wrap_content" 
-        android:textSize="16sp" 
+        android:textSize="24sp" 
         android:textColor="#dddddd" 
         />     
          
@@ -18,7 +18,7 @@
         android:layout_width="wrap_content" 
         android:layout_height="wrap_content" 
         android:layout_alignParentRight="true" 
-        android:textSize="16sp" 
+        android:textSize="24sp" 
         android:textColor="#999999" 
         /> 
 </RelativeLayout>
