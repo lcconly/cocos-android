@@ -14,6 +14,7 @@ import org.cocos2d.types.CGPoint;
 import org.cocos2d.types.CGRect;
 
 import android.R.integer;
+import android.R.string;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -54,6 +55,7 @@ public class GameRunTimeCCLayer extends CCLayer {
 	private Timer start_game_3 = new Timer();
 	private Timer good_perfect_timer=new Timer();
 	private int new_end_time;
+	private String songName;
 	private int[] new_start_time;
 	long timeTestStart;//=System.currentTimeMillis();//记录开始时间
 
@@ -66,8 +68,8 @@ public class GameRunTimeCCLayer extends CCLayer {
 			game_button[i].end_time();
 		}
 		end_game.cancel();
-		mp.stop();
-		mp.release();
+		//mp.stop();
+		//mp.release();
 	}
 	public GameRunTimeCCLayer() {
 		this.setIsTouchEnabled(true);
@@ -79,6 +81,7 @@ public class GameRunTimeCCLayer extends CCLayer {
 			theme_button_id=2;
 		Intent eaIntent=CCDirector.sharedDirector().getActivity().getIntent();
 		easy_son_on=eaIntent.getIntExtra("state", 1);
+		songName=eaIntent.getStringExtra("songName");
 		init();
 		// game_started();
 		// date=new Date();
@@ -94,7 +97,18 @@ public class GameRunTimeCCLayer extends CCLayer {
 		for (int i = 0; i < 4; i++) {
 			tag[i] = -1;
 		}
-		file_read.init("music.txt");
+		if(songName.equals("youngandbeautiful")&&easy_son_on==1)
+			file_read.init("music_1.txt");
+		else if(songName.equals("youngandbeautiful")&&easy_son_on==2)
+			file_read.init("music_2.txt");
+		else if(songName.equals("youngandbeautiful")&&easy_son_on==3)
+			file_read.init("music_3.txt");
+		else if(songName.equals("cktsdxdgl")&&easy_son_on==1)
+			file_read.init("cktsdxdgl_1.txt");
+		else if(songName.equals("cktsdxdgl")&&easy_son_on==2)
+			file_read.init("cktsdxdgl_2.txt");
+		else if(songName.equals("cktsdxdgl")&&easy_son_on==3)
+			file_read.init("cktsdxdgl_3.txt");
 		end_game.schedule(new end_game_class(), file_read.get_end_time() + 3000);
 		new_end_time=file_read.get_end_time();
 		game_button = new Button_class[file_read.get_button_num()];
@@ -206,6 +220,9 @@ public class GameRunTimeCCLayer extends CCLayer {
 			//if(music_name=="youngandbeautiful")
 			//	mp = MediaPlayer.create(CCDirector.sharedDirector().getActivity(), R.raw.youngandbeautiful);//设置路径
 			//else if(music_name=="cktsdxdgl")
+			if(songName.equals("youngandbeautiful"))
+				mp = MediaPlayer.create(CCDirector.sharedDirector().getActivity(), R.raw.youngandbeautiful);//设置路径
+			else if(songName.equals("cktsdxdgl"))
 				mp = MediaPlayer.create(CCDirector.sharedDirector().getActivity(), R.raw.cktsdxdgl);//设置路径
 	        //mp.prepare();//缓冲
 
@@ -523,8 +540,8 @@ public class GameRunTimeCCLayer extends CCLayer {
 		if (pauseScene!=null&&CGRect.containsPoint(pauseScene.get_back().getBoundingBox(), point)) {
 			for (int i = 0; i < game_button.length; i++)
 				game_button[i].end_time();
-			mp.stop();
-			mp.release();
+			//mp.stop();
+			//mp.release();
 			end_game.cancel();
 			this.removeChild(pauseScene, true);
 			pauseScene=null;
@@ -538,8 +555,8 @@ public class GameRunTimeCCLayer extends CCLayer {
 			for (int i = 0; i < game_button.length; i++)
 				game_button[i].end_time();
 			end_game.cancel();
-			mp.stop();
-			mp.release();
+			//mp.stop();
+			//mp.release();
 			this.removeChild(pauseScene, true);
 			pauseScene=null;
 			Intent intent = new Intent(CCDirector.sharedDirector()

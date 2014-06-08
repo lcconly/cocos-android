@@ -39,9 +39,24 @@ public class File_read {
 		InputStreamReader inputStreamReader = null; 
 		InputStream inputStream=null;
 		try {
-			if(name.equals("music.txt"))
+			if(name.equals("music_1.txt"))
 				inputStream = CCDirector.sharedDirector().getActivity()
-					.getResources().openRawResource(R.raw.music);  
+					.getResources().openRawResource(R.raw.music_1);  
+			else if(name.equals("music_2.txt"))
+				inputStream = CCDirector.sharedDirector().getActivity()
+					.getResources().openRawResource(R.raw.music_2);  
+			else if(name.equals("music_3.txt"))
+				inputStream = CCDirector.sharedDirector().getActivity()
+					.getResources().openRawResource(R.raw.music_3);  
+			else if(name.equals("cktddxdgl_1.txt"))
+				inputStream = CCDirector.sharedDirector().getActivity()
+				.getResources().openRawResource(R.raw.cktsdxdgl_1);  
+			else if(name.equals("cktddxdgl_2.txt"))
+				inputStream = CCDirector.sharedDirector().getActivity()
+				.getResources().openRawResource(R.raw.cktsdxdgl_2);  
+			else if(name.equals("cktddxdgl_3.txt"))
+				inputStream = CCDirector.sharedDirector().getActivity()
+				.getResources().openRawResource(R.raw.cktsdxdgl_3);  
 			inputStreamReader = new InputStreamReader(inputStream, "gbk");
 			bufferedReader = new BufferedReader(inputStreamReader);
 			try {
