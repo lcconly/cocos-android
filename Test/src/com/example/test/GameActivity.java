@@ -1,6 +1,5 @@
 package com.example.test;
 
-import org.cocos2d.layers.CCLayer;
 import org.cocos2d.layers.CCScene;
 import org.cocos2d.nodes.CCDirector;
 import org.cocos2d.opengl.CCGLSurfaceView;
@@ -41,6 +40,7 @@ public class GameActivity extends Activity {
 	@Override  
     protected void onResume() {  
         super.onResume();  
+        //CCDirector.sharedDirector().resume();  
         ccLayer.continue_game();
         //恢复游戏运行  
         // cocos2d提供3个生命周期方法，对应android的三个生命周期  

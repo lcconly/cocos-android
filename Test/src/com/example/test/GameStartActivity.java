@@ -91,7 +91,6 @@ public class GameStartActivity extends Activity {
 		mList.add(map);
 		mList.add(map);
 		mList.add(map);
-		mList.add(map);
 		
 		mListAdapter = new SimpleAdapter(this, mList, R.layout.list_row, 
 		new String[]{"First", "Next", "State"}, 
@@ -108,6 +107,8 @@ public class GameStartActivity extends Activity {
                 
             		Map<String, Object> map=mList.get(arg2);
             		String songNameString=(String)map.get("Next");
+            		
+            		//System.out.println(songNameString);
             		
             		if(songNameString.equals("Young and Beautiful") || songNameString.equals("残酷天使的行动纲领")) {
             			if(songNameString.equals("Young and Beautiful")) {

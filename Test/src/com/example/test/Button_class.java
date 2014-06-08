@@ -155,6 +155,22 @@ public class Button_class extends CCLayer{
 					}
 
 				 GameRunTimeCCLayer.lock.lock();
+					if(tags==4){
+						try {
+							Thread.sleep(1000);
+						} catch (InterruptedException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+						try {
+							Thread.sleep(sleep_time);
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						tags=0;
+					}
+
 				 buttonCcSprite.setAnchorPoint(0, 0);
 				 buttonCcSprite.setPosition(100, 550);
 				 Button_class.this.ccLayer.addChild(buttonCcSprite, 4, 4);
