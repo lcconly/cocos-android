@@ -481,6 +481,12 @@ public class GameRunTimeCCLayer extends CCLayer {
 		timeTestStart=System.currentTimeMillis()+3000;
 
 	}
+	
+	public void end_game() {
+		mp.stop();
+		mp.release();
+	}
+	
 	@Override
 	public boolean ccTouchesBegan(MotionEvent event) {
 

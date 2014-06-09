@@ -40,8 +40,7 @@ public class GameActivity extends Activity {
 	@Override  
     protected void onResume() {  
         super.onResume();  
-        //CCDirector.sharedDirector().resume();  
-        ccLayer.continue_game();
+        CCDirector.sharedDirector().resume();  
         //恢复游戏运行  
         // cocos2d提供3个生命周期方法，对应android的三个生命周期  
     }  
@@ -56,11 +55,16 @@ public class GameActivity extends Activity {
     @Override  
     protected void onDestroy() {  
         super.onDestroy();  
-        CCDirector.sharedDirector().end();  
+        //CCDirector.sharedDirector().end();
+        ccLayer.end_game();
         // 结束，游戏退出时调用  
     }
     protected void onStop(){
     	super.onStop();
     	ccLayer.pause_game();
     }
+    protected void onRestart() {
+    	 super.onRestart();  
+         ccLayer.continue_game();
+	}
 }
