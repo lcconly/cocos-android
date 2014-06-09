@@ -28,36 +28,42 @@
         <activity
             android:name="com.example.test.GameStartActivity"
             android:label="@string/title_activity_game_start"
-            android:screenOrientation="landscape" >
+            android:screenOrientation="landscape"
+            android:configChanges="orientation|keyboardHidden|screenSize" >
         </activity>
         <activity
             android:name="com.example.test.SettingActivity"
             android:label="@string/title_activity_setting"
             android:screenOrientation="landscape"
-            android:theme="@style/CustomActionBarTheme" >
+            android:theme="@style/CustomActionBarTheme"
+            android:configChanges="orientation|keyboardHidden|screenSize" >
         </activity>
         <activity
             android:name="com.example.test.MallActivity"
             android:label="@string/title_activity_mall"
             android:screenOrientation="landscape"
-            android:theme="@style/CustomActionBarTheme" >
+            android:theme="@style/CustomActionBarTheme"
+            android:configChanges="orientation|keyboardHidden|screenSize" >
         </activity>
         <activity
             android:name="com.example.test.RankActivity"
             android:label="@string/title_activity_rank"
             android:screenOrientation="landscape"
-            android:theme="@style/CustomActionBarTheme" >
+            android:theme="@style/CustomActionBarTheme"
+            android:configChanges="orientation|keyboardHidden|screenSize" >
         </activity>
         <activity
             android:name="com.example.test.GameActivity"
             android:label="@string/title_activity_game"
-            android:screenOrientation="landscape" >
+            android:screenOrientation="landscape"
+            android:configChanges="orientation|keyboardHidden|screenSize" >
         </activity>
         <activity
             android:name="com.example.test.GameEndActivity"
             android:label="@string/title_activity_game_end" 
             android:screenOrientation="landscape"
-            android:theme="@style/CustomActionBarTheme" >
+            android:theme="@style/CustomActionBarTheme"
+            android:configChanges="orientation|keyboardHidden|screenSize" >
         </activity>
     </application>
 

@@ -62,7 +62,7 @@ public class SettingActivity extends ActionBarActivity {
 		}
 	};
 	
-	private final BroadcastReceiver sreenReceiver = new BroadcastReceiver(){    
+	/*private final BroadcastReceiver sreenReceiver = new BroadcastReceiver(){    
 	    
 	    @Override    
 	    public void onReceive(Context context, Intent intent) {    
@@ -85,9 +85,8 @@ public class SettingActivity extends ActionBarActivity {
 			}
 
 	    }
-	};
+	};*/
 	    
-	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -123,6 +122,7 @@ public class SettingActivity extends ActionBarActivity {
 			e.printStackTrace();
 		}*/
         
+        //System.out.println("create");
         player.start();
         
         player.setOnCompletionListener(new completionListener());
@@ -133,7 +133,8 @@ public class SettingActivity extends ActionBarActivity {
 		//IntentFilter sreenFilter = new IntentFilter();    
 		//sreenFilter.addAction(Intent.ACTION_SCREEN_OFF);    
 		//sreenFilter.addAction(Intent.ACTION_SCREEN_ON);    
-	   // registerReceiver(sreenReceiver, sreenFilter); 
+		//registerReceiver(sreenReceiver, sreenFilter);
+		
 	}
 	
 	class listener implements OnSeekBarChangeListener {
@@ -207,7 +208,7 @@ public class SettingActivity extends ActionBarActivity {
 	
 	@Override
 	public void onStop() {
-		System.out.println("stop");
+		//System.out.println("stop");
 		super.onStop();
 		player.pause();
 		
@@ -215,7 +216,7 @@ public class SettingActivity extends ActionBarActivity {
 	
 	@Override
 	public void onRestart() {
-		System.out.println("restart");
+		//System.out.println("restart");
 		super.onRestart();
 		player.start();
 		
@@ -223,7 +224,7 @@ public class SettingActivity extends ActionBarActivity {
 	
 	@Override
 	protected void onDestroy() {
-		
+		//System.out.println("destroy");
 		super.onDestroy();
 		player.stop();
 		player.release();
