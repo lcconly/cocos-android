@@ -48,13 +48,13 @@ public class File_read {
 			else if(name.equals("music_3.txt"))
 				inputStream = CCDirector.sharedDirector().getActivity()
 					.getResources().openRawResource(R.raw.music_3);  
-			else if(name.equals("cktddxdgl_1.txt"))
+			else if(name.equals("cktsdxdgl_1.txt"))
 				inputStream = CCDirector.sharedDirector().getActivity()
 				.getResources().openRawResource(R.raw.cktsdxdgl_1);  
-			else if(name.equals("cktddxdgl_2.txt"))
+			else if(name.equals("cktsdxdgl_2.txt"))
 				inputStream = CCDirector.sharedDirector().getActivity()
 				.getResources().openRawResource(R.raw.cktsdxdgl_2);  
-			else if(name.equals("cktddxdgl_3.txt"))
+			else if(name.equals("cktsdxdgl_3.txt"))
 				inputStream = CCDirector.sharedDirector().getActivity()
 				.getResources().openRawResource(R.raw.cktsdxdgl_3);  
 			inputStreamReader = new InputStreamReader(inputStream, "gbk");
